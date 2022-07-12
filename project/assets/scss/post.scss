@@ -1,0 +1,31 @@
+.page-name {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0 20px 0;
+  font-size: 32px;
+}
+
+.post-layout {
+  justify-content: center;
+  flex-direction: column;
+
+  .post-box {
+    margin: 0 auto;
+    width: 320px;
+    min-height: 262px;
+    border: 1px solid rgba(0, 0, 0, 0.64);
+  }
+
+  .post-text {
+    font-size: 22px;
+    line-height: 27px;
+    color: #6EA5F9;
+  }
+
+  .info {
+    padding: 10px 0 0 22.5px;
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+  }
+}
