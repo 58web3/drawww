@@ -1,10 +1,16 @@
 <template>
   <div :key="keyRender" class="body-wrapper">
-      <Nuxt />
+    <Header />
+    <div class="wrapper">
+      <router-view />
+      </div>
+    <Footer />
   </div>
 </template>
 
 <script>
+import Header from '@/components/header/Header'
+import Footer from '@/components/footer/Footer'
 export default {
   name: 'LayoutDefault',
   components: {},
@@ -13,6 +19,8 @@ export default {
   data() {
     return {
       keyRender: new Date().getTime(),
+      Header,
+      Footer
     }
   },
   computed: {},
@@ -32,8 +40,10 @@ body {
 }
 
 .wrapper {
-  height: calc(100vh - 12px - 64px);
-  overflow-y: scroll;
-  overflow-x: none;
+    width: 100%;
+    margin: 0 auto;
+    top: 101px;
+    bottom: 101px;
+    position: absolute;
 }
 </style>

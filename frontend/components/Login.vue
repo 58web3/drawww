@@ -1,7 +1,7 @@
 <!-- Please remove this file from your project -->
 <template>
   <div class="login">
-    <span class="header">ログイン</span>
+    <span class="login-header">ログイン</span>
     <md-button
       class="md-raised md-primary login-button"
       style="width: 100%"
@@ -16,6 +16,7 @@
 import { Web3Auth } from "@web3auth/web3auth";
 import { CHAIN_NAMESPACES } from "@web3auth/base";
 import RPC from "../utils/evm";
+const axios = require('axios')
 
 export default {
   name: "LoginPage",
@@ -144,7 +145,7 @@ export default {
   justify-content: center;
   flex-direction: column;
 
-  .header {
+  .login-header {
     font-size: 32px;
     line-height: 38px;
   }
