@@ -146,7 +146,7 @@ export default {
   flex-direction: column;
 
   .login-header {
-    font-size: 32px;
+    font-size: 22px;
     line-height: 38px;
   }
   .login-button {
