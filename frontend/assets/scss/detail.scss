@@ -1,0 +1,43 @@
+.detail-layout {
+  //justify-content: center;
+
+  .detail {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    .image {
+        width: 341px;
+        height: 486px;
+    }
+
+    .text-detail {
+        padding-top: 10px;
+        padding-left: 15px;
+        font-size: 22px;
+        color: #6EA5F9;
+    }
+  }
+
+  .icon {
+    padding: 20px 0;
+
+    .twitter {
+        margin-right: 20px;
+        float: right;
+        width: 34px;
+        height: 34px;
+    }
+  }
+
+  .detail-button {
+    border-radius: 20px;
+    margin: 30px auto 30px auto;
+    display: flex;
+    width: 134px;
+    height: 35px;
+    background-color: #4D9DE8;
+    color: #fff;
+  }
+}

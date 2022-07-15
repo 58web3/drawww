@@ -1,14 +1,14 @@
 <template>
-  <Login/>
+  <NFTMintPage/>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import LoginPage from '@/components/Login.vue'
+import NFTMintPage from '@/components/nft-mint/NFTMintPage.vue'
 export default Vue.extend({
   data() {
     return {
-      LoginPage
+      NFTMintPage
     }
   },
   name: 'IndexPage'

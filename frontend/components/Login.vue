@@ -78,41 +78,10 @@ export default {
       const user = this.user;
       console.log(user);
       console.log(this.userAccount);
+      this.$router.push('/home')
       if (!user) {
         return;
       }
-      // create user
-      const data = JSON.stringify({
-        email: user.email,
-        name: user.name,
-        profile_image: user.profileImage,
-        aggregate_verifier: user.aggregateVerifier,
-        verifier: user.verifier,
-        verifier_id: user.verifierId,
-        type_of_login: user.typeOfLogin,
-        last_name: "",
-        first_name: "",
-        wallet_address: this.userAccount,
-        wallet_created_at: 1655562492284,
-      });
-      const config = {
-        method: "post",
-        url: `/v1/users`,
-        data,
-        headers: {
-          accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      };
-      console.log(process.env.BASE_API);
-      axios(config)
-        .then((response) => {
-          console.log(JSON.stringify(response.data));
-          this.user_id = response.data.user_id;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
     },
     async getUserInfo() {
       if (!this.web3auth) {

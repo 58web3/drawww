@@ -8,12 +8,12 @@
             <span class="footer-btn-font">Home</span>
           </div>
           <div class="md-large item">
-            <div class="circle temp"></div>
-            <span class="footer-btn-font">Temp</span>
+            <div class="circle text"></div>
+            <img :src="TEXT" class="text-content"/>
           </div>
           <div class="md-large item">
             <div class="circle"></div>
-            <span class="footer-btn-font">NTF DAO</span>
+            <span class="footer-btn-font">NFT DAO</span>
           </div>
         </div>
       </div>
@@ -23,13 +23,16 @@
 
 <script>
 
+import TEXT from "@/assets/image/text.png"
 export default {
   name: "Footer",
   components: {},
   mixins: [],
   props: {},
   data() {
-    return {};
+    return {
+      TEXT
+    };
   },
   async fetch() {},
   computed: {},
