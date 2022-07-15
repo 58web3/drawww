@@ -16,7 +16,7 @@
             <img :src="POST" />
             <span class="post-text">写真を選択</span>
         </div>
-        <md-button class="post-button">
+        <md-button class="post-button" @click="goToPostCompletedPage">
             投稿する
         </md-button>
       </div>
@@ -50,7 +50,9 @@ export default {
 
   },
   methods: {
-
+    goToPostCompletedPage() {
+      this.$router.push('/post/post-completed')
+    }
   },
 }
 

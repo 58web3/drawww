@@ -9,7 +9,7 @@
             <span class="post-text">どんな出来ばえ？</span>
         </div>
         <div class="info">
-            <img :src="POST" />
+            <img :src="POST" class="post-img" @click="goToPostInputPage"/>
             <span class="post-text">写真を選択</span>
         </div>
       </div>
@@ -28,7 +28,8 @@ export default {
   props: {},
   data() {
     return {
-        POST
+        POST,
+        single: null
     }
   },
   computed: {},
@@ -40,7 +41,9 @@ export default {
 
   },
   methods: {
-
+    goToPostInputPage() {
+      this.$router.push('/post/post-input')
+    }
   },
 }
 

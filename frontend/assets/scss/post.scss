@@ -27,5 +27,9 @@
     display: flex;
     align-items: center;
     margin: 0 auto;
+
+    .post-img {
+      cursor: pointer;
+    }
   }
 }

@@ -6,7 +6,7 @@
 import PostCompletedPage from '@/components/post/PostCompletedPage'
 
 export default {
-  name: 'LayoutPostInput',
+  name: 'LayoutPostCompleted',
   components: {
     PostCompletedPage,
   },

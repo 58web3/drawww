@@ -1,12 +1,12 @@
 <template>
   <div class="post-completed">
     <div class="page-name">
-      投稿完了
+      Twitter投稿完了
     </div>
     <div class="md-layout post-layout">
       <div class="md-layout-item">
-        <md-button class="post-button" @click="goToPostTwitterPage">
-            Twitterに投稿
+        <md-button class="post-button">
+            閲覧する
         </md-button>
       </div>
     </div>
@@ -29,9 +29,6 @@ export default {
   created() {},
   mounted() {},
   methods: {
-   goToPostTwitterPage() {
-      this.$router.push('/post/post-completed')
-    } 
   },
 }
 </script>

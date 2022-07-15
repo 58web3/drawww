@@ -2,7 +2,7 @@
   <div :key="keyRender" class="body-wrapper">
     <Header />
     <div class="wrapper">
-      <router-view />
+      <router-view keep-alive />
       </div>
     <Footer />
   </div>
