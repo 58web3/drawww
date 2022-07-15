@@ -9,13 +9,9 @@
             <span class="text-detail">0x56A0c97FE2536dEc74de803b941eF2Cb3D504B54</span>
             <span class="text-title">NFT 所有者</span>
             <span class="text-detail">0x56A0c97FE2536dEc74de803b941eF2Cb3D504B54</span>
+            <span class="text-title">NFT マーケットプレイスURL</span>
+            <span class="text-detail">https://opensea.io/collection/veryuniverseanimals</span>
         </div>
-        <div class="link-box">
-          <span class="link">https:// ~ Open SeaなどのサイトURL</span>
-        </div>
-        <md-button class="marketplace-button" @click="goToCompletedPage">
-            出品先URLを登録
-        </md-button>
       </div>
     </div>
   </div>
@@ -25,7 +21,7 @@
 
 import IMAGE from '@/assets/image/example.png'
 export default {
-  name: 'MarketPlacePage',
+  name: 'MarketCompletedPage',
   components: {
   },
   mixins: [],
@@ -44,14 +40,11 @@ export default {
 
   },
   methods: {
-    goToCompletedPage() {
-        this.$router.push('/market-completed')
-    }
   },
 }
 
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/scss/marketplace";
+@import "@/assets/scss/market-completed";
 </style>
