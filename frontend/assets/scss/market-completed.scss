@@ -1,0 +1,40 @@
+.marketplace-layout {
+    //justify-content: center;
+  
+    .marketplace {
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+  
+      .image {
+          width: 341px;
+          height: 486px;
+      }
+  
+      .text-detail {
+          padding-top: 10px;
+          padding-left: 15px;
+          font-size: 22px;
+          color: #6EA5F9;
+      }
+
+      .text-title {
+        padding-top: 10px;
+        padding-left: 15px;
+        font-size: 22px;
+        color: #000;
+    }
+    }
+  
+    .marketplace-button {
+      border-radius: 20px;
+      margin: 30px auto 30px auto;
+      display: flex;
+      width: 134px;
+      height: 35px;
+      background-color: #4D9DE8;
+      color: #fff;
+    }
+  }
+  

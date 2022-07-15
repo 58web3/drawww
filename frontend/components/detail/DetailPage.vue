@@ -9,7 +9,7 @@
         <div class="icon">
            <img :src="TWIITER" class="twitter" />
         </div>
-        <md-button class="detail-button" @click="goToNTFMintPage">
+        <md-button class="detail-button" @click="goToNFTMintPage">
             投稿する
         </md-button>
       </div>
@@ -42,8 +42,8 @@ export default {
 
   },
   methods: {
-    goToNTFMintPage() {
-        this.$router.push('/ntf-mint')
+    goToNFTMintPage() {
+        this.$router.push('/nft')
     }
   },
 }
