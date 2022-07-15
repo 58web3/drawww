@@ -3,14 +3,16 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+
 import NFTMintPage from '@/components/nft/NFTMintPage.vue'
-export default Vue.extend({
-  data() {
-    return {
-      NFTMintPage
-    }
+export default {
+  name: 'LayoutNFTMint',
+  components: {
+    NFTMintPage
   },
-  name: 'IndexPage'
-})
+  mixins: [],
+  middleware: [],
+  computed: {
+  },
+}
 </script>

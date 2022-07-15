@@ -1,5 +1,8 @@
 <template>
   <div class="nft-mint">
+    <div class="page-name">
+      NFT作成完了
+    </div>
     <div class="md-layout nft-mint-layout">
       <div class="md-layout-item">
         <md-button class="nft-mint-button" @click="goToMarkerplacePage">
@@ -32,7 +35,7 @@ export default {
   },
   methods: {
     goToMarkerplacePage() {
-        this.$router.push('/markerplace')
+        this.$router.push('/marketplace')
     }
   },
 }

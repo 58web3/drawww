@@ -10,6 +10,9 @@
             <span class="text-title">NFT 所有者</span>
             <span class="text-detail">0x56A0c97FE2536dEc74de803b941eF2Cb3D504B54</span>
         </div>
+        <div class="link-box">
+          <span class="link">https:// ~ Open SeaなどのサイトURL</span>
+        </div>
         <md-button class="marketplace-button" @click="goToCompletedPage">
             出品先URLを登録
         </md-button>
