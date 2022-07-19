@@ -67,7 +67,6 @@ export default {
       this.web3auth.initModal();
     } catch (error) {
       this.uiConsole("error", error);
-      this.uiConsole("error", error);
     } finally {
       this.loading.value = false;
     }
@@ -88,6 +87,7 @@ export default {
       const user = this.userData;
       this.$store.dispatch('user/setUser', user)
       sessionStorage.setItem('user', JSON.stringify(user));
+      sessionStorage.setItem('isLogin', true);
 
       console.log(user);
       console.log(this.userAccount);
