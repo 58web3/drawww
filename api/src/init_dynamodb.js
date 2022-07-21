@@ -26,6 +26,15 @@ const tables = [
       ReadCapacityUnits: 10,
       WriteCapacityUnits: 10,
     },
+  },
+  {
+    TableName: 'Posts',
+    KeySchema: [{ AttributeName: 'post_id', KeyType: 'HASH' }],
+    AttributeDefinitions: [{ AttributeName: 'post_id', AttributeType: 'S' }],
+    ProvisionedThroughput: {
+      ReadCapacityUnits: 10,
+      WriteCapacityUnits: 10,
+    },
   }
 ]
 const dym = new AWS.DynamoDB()

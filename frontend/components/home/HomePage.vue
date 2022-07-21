@@ -52,12 +52,29 @@ export default {
   watch: {},
   created() {},
   mounted() {
-    //this.$root.$emit("home-active");
+    this.getDBPost();
   },
   methods: {
     goToDetailPage() {
       this.$router.push("/detail");
-    }
+    },
+    async getDBPost() {
+      const config = {
+        method: 'get',
+        url: `/v1/post/`,
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+      }
+      await axios(config)
+          .then((response) => {
+            console.log(response.data)
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+    },
   },
 };
 </script>
