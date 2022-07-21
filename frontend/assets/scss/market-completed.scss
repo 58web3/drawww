@@ -1,0 +1,32 @@
+.marketplace-layout {
+  //justify-content: center;
+
+  .marketplace-item {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 50px;
+
+    .image {
+        width: 300px;
+        height: 486px;
+        margin: 0 auto;
+    }
+
+    .text-detail {
+        padding-top: 10px;
+        padding-left: 15px;
+        font-size: 22px;
+        color: #6EA5F9;
+        line-break: anywhere;
+    }
+
+    .text-title {
+      padding-top: 30px;
+      padding-left: 15px;
+      font-size: 22px;
+      color: #000;
+  }
+  }
+}
