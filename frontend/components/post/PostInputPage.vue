@@ -8,7 +8,7 @@
         <div class="post-box">
             <span class="post-text">かなたそ</span>
             <div class="image">
-                <img :src="IMAGE" />
+                <img :src="dataImage" />
                 <img :src="EXIT" class="exit"/>
             </div>
         </div>
@@ -28,6 +28,7 @@
 import IMAGE from '@/assets/image/example.png'
 import POST from '@/assets/icons/post.png'
 import EXIT from '@/assets/icons/exit.png'
+//const IPFS = require('ipfs')
 export default {
   name: 'PostInputPage',
   components: {
@@ -38,19 +39,33 @@ export default {
     return {
         POST,
         IMAGE,
-        EXIT
+        EXIT,
+        dataImage: ''
     }
   },
-  computed: {},
+  computed: {
+    imageUrl() {
+      return this.$store.getters['user/getImageUrl']
+    }
+  },
   watch: {},
   created() {
 
   },
   mounted() {
-
+    this.dataImage = this.imageUrl;
   },
   methods: {
-    goToPostCompletedPage() {
+    async goToPostCompletedPage() {
+      // const node = await IPFS.create()
+
+      // const data = this.imageUrl
+
+      // const results = node.add(data)
+
+      // for await (const { cid } of results) {
+      //   console.log(cid.toString())
+      // }
       this.$router.push('/post/post-completed')
     }
   },

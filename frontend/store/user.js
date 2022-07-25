@@ -2,7 +2,8 @@ export const state = () => ({
   user: null,
   home: '',
   post: '',
-  dao: ''
+  dao: '',
+  imageUrl: ''
 })
 
 export const mutations = {
@@ -18,6 +19,9 @@ export const mutations = {
   setIsDao(state, dao) {
     state.dao = dao
   },
+  setIsImageUrl(state, imageUrl) {
+    state.imageUrl = imageUrl
+  },
 }
 
 export const actions = {
@@ -29,6 +33,9 @@ export const actions = {
   },
   setIsDao({ commit }, dao) {
     commit('setIsDao', dao)
+  },
+  setIsImageUrl({ commit }, imageUrl) {
+    commit('setIsImageUrl', imageUrl)
   }
 }
 
@@ -44,6 +51,9 @@ export const getters = {
   },
   getDao(state) {
     return state.dao
+  },
+  getImageUrl(state) {
+    return state.imageUrl
   }
 }
 
