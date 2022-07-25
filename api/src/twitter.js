@@ -11,14 +11,18 @@ const web3 = new Web3(
 const EXPLORER_URL = process.env.EXPLORER_URL;
 
 var client = new Twitter({
-  consumer_key: "xGwoSRAdx8FQoc2WKYVGUsFtJ",
-  consumer_secret: "Ly0Bl8om7HGPToPjNoPp8KAlzhpmQiUTFJtmB9HW0tCAXWXhIv",
-  bearer_token:
-    "AAAAAAAAAAAAAAAAAAAAAD6zewEAAAAAY2m5dOB9nJGp3I%2FXqOZYvAqd%2Fpw%3DYwKOHI3nLvXxdxNtD0OZgw1bWGGanqvzgIw5pQ96iGOgylsh8z",
+  consumer_key: process.env.CONSUMER_KEY,
+  consumer_secret: process.env.CONSUMER_SECRET,
+  bearer_token: process.env.BEARER_TOKEN,
 });
 
+let param = {
+  title: '',
+  url: ''
+}
+
 client
-  .post("update", { status: "I Love Twitter" })
+  .post("update", param)
   .then(function (tweet) {
     console.log(tweet);
   })
@@ -35,6 +39,8 @@ router.post("/", async (req, res) => {
     const tweet = {
       tweet_id: tweetId,
       date: systemDate,
+      title: param.title,
+      url: param.url
     };
 
     await dynamodb
