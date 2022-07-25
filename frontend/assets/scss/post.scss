@@ -23,7 +23,7 @@
   }
 
   .info {
-    padding: 10px 0 0 22.5px;
+    padding: 10px 22.5px 0 22.5px;
     display: flex;
     align-items: center;
     margin: 0 auto;
@@ -32,4 +32,8 @@
       cursor: pointer;
     }
   }
+}
+
+:deep(.md-field.md-has-placeholder) {
+  color: #6EA5F9 !important;
 }
