@@ -1,0 +1,52 @@
+.footer {
+  height: 101px;
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+  background-color: rgba($color: #D9D9D9, $alpha: 0.5);
+
+  .md-toolbar-box {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+
+    .item {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+    }
+  }
+
+  .circle {
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    background-color: #D9D9D9;
+  }
+
+  .post {
+    background-color: #5CFF6D;
+  }
+
+  .home {
+    background-color: #4D9DE8;
+  }
+
+  .dao {
+    background-color: #F038C8;
+  }
+
+  .text-content {
+    height: 20px;
+  }
+
+  .footer-btn-font {
+    font-size: 12px;
+  }
+}
+
+.md-toolbar {
+  height: 100%;
+}
