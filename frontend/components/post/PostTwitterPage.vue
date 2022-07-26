@@ -23,18 +23,23 @@ export default {
   props: {},
   data() {
     return {
-      tweetIdVal: ''
+      tweetIdVal: '',
+      dataImage: ''
     }
   },
   computed: {
     tweetId() {
       return this.$store.getters['user/getTweetId']
+    },
+    image() {
+      return this.$store.getters["user/getImage"];
     }
   },
   watch: {},
   created() {},
   mounted() {
     this.tweetIdVal = this.tweetId;
+    this.dataImage = this.image.url;
   },
   methods: {
    async goToPostCompletePage() {

@@ -31,12 +31,13 @@ export default {
   props: {},
   data() {
     return {
-        dataImage: ''
+        dataImage: '',
+        nameImage: ''
     }
   },
   computed: {
-    imageUrl() {
-      return this.$store.getters['user/getImageUrl']
+    image() {
+      return this.$store.getters['user/getImage']
     }
   },
   watch: {},
@@ -45,6 +46,7 @@ export default {
   },
   mounted() {
     this.dataImage = this.imageUrl;
+    this.nameImage = this.image.name;
   },
   methods: {
     goToCompletedPage() {

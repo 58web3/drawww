@@ -3,7 +3,7 @@ export const state = () => ({
   home: '',
   post: '',
   dao: '',
-  imageUrl: '',
+  image: null,
   tweetId: ''
 })
 
@@ -20,8 +20,8 @@ export const mutations = {
   setIsDao(state, dao) {
     state.dao = dao
   },
-  setIsImageUrl(state, imageUrl) {
-    state.imageUrl = imageUrl
+  setIsImage(state, image) {
+    state.image = image
   },
   setIsTweetId(state, tweetId) {
     state.tweetId = tweetId
@@ -38,8 +38,8 @@ export const actions = {
   setIsDao({ commit }, dao) {
     commit('setIsDao', dao)
   },
-  setIsImageUrl({ commit }, imageUrl) {
-    commit('setIsImageUrl', imageUrl)
+  setIsImage({ commit }, image) {
+    commit('setIsImage', image)
   },
   setIsTweetId({ commit }, tweetId) {
     commit('setIsTweetId', tweetId)
@@ -59,8 +59,8 @@ export const getters = {
   getDao(state) {
     return state.dao
   },
-  getImageUrl(state) {
-    return state.imageUrl
+  getImage(state) {
+    return state.image
   },
   getTweetId(state) {
     return state.tweetId

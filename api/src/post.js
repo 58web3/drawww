@@ -9,12 +9,13 @@ router.post("/", async (req, res) => {
     const requestJSON = req.body;
     let tweetId = uuid.v4();
     const systemDate = Date.now();
-    const url = requestJSON.imageUrl;
+    const image = requestJSON.image;
 
     const tweet = {
       tweet_id: tweetId,
       date: systemDate,
-      url: url,
+      url: image.url,
+      name: image.name
     };
 
     console.log(tweet)
@@ -63,7 +64,7 @@ router.get("/:tweet_id", async (req, res) => {
       .get({
         TableName: "Post",
         Key: {
-          user_id: req.params.tweet_id,
+          tweet_id: req.params.tweet_id,
         },
       })
       .promise();

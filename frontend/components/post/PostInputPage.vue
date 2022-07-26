@@ -4,7 +4,7 @@
     <div class="md-layout post-layout">
       <div class="md-layout-item">
         <div class="post-box">
-          <span class="post-text">かなたそ</span>
+          <span class="post-text">{{ nameImage }}</span>
           <div class="image">
             <img :src="dataImage" />
             <img :src="EXIT" class="exit" />
@@ -46,17 +46,20 @@ export default {
       EXIT,
       dataImage: "",
       tweetId: "",
+      nameImage: ''
     };
   },
   computed: {
-    imageUrl() {
-      return this.$store.getters["user/getImageUrl"];
+    image() {
+      return this.$store.getters["user/getImage"];
     },
   },
   watch: {},
   created() {},
   mounted() {
-    this.dataImage = this.imageUrl;
+    this.nameImage = this.image.name;
+    console.log(this.nameImage)
+    this.dataImage = this.image.url;
   },
   methods: {
     async goToPostCompletedPage() {
@@ -70,24 +73,24 @@ export default {
       //   console.log(cid.toString())
       // }
 
-      let data = JSON.stringify({
-        imageUrl: this.dataImage,
-      });
+      let data = {
+        image: this.image,
+      };
 
       let config = {
         method: "post",
         url: "/v1/post",
-        headers: {
-          accept: "application/json",
-          "Content-Type": "application/json",
+        headers: { 
+          'accept': 'application/json', 
+          'Content-Type': 'application/json'
         },
         data: data,
       };
 
       axios(config)
         .then((response) => {
-          console.log(JSON.stringify(response.data));
-          this.tweetId = JSON.stringify(response.data.tweet_id);
+          console.log(response.data);
+          this.tweetId = response.data.tweet_id;
           this.$store.dispatch("user/setIsTweetId", this.tweetId);
         })
         .catch((error) => {
@@ -102,8 +105,13 @@ export default {
       reader.readAsDataURL(event[0]);
       reader.onload = (e) => {
         console.log(e);
-        this.imageUrl = e.target.result;
-        this.$store.dispatch("user/setIsImageUrl", this.imageUrl);
+        this.image = {
+          url: e.target.result,
+          name: (event[0].name)
+          };
+        console.log(this.nameImage)
+        this.nameImage = this.image.name;
+        this.$store.dispatch("user/setIsImage", this.image);
       };
     },
   },

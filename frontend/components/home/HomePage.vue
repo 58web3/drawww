@@ -54,16 +54,15 @@ export default {
     const config = {
       method: "get",
       url: `/v1/post`,
-      headers: {
-        accept: "application/json",
-        "Content-Type": "application/json",
+      headers: { 
+        'accept': 'application/json', 
+        'Content-Type': 'application/json'
       },
     };
 
     axios(config)
       .then((response) => {
         this.listImages = response.data.posts;
-        console.log('res', response.data)
       })
       .catch((error) => {
         console.log(error);

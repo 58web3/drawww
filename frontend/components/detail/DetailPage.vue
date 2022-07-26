@@ -4,7 +4,7 @@
       <div class="md-layout-item">
         <div class="detail">
             <img :src="post.url" class="image"/>
-            <span class="text-detail">かなたそ</span>
+            <span class="text-detail">{{ nameImage }}</span>
         </div>
         <div class="icon">
            <img :src="TWIITER" class="twitter" />
@@ -30,7 +30,9 @@ export default {
   data() {
     return {
         TWIITER,
-        post: null
+        post: null,
+        image: null,
+        nameImage: ''
     }
   },
   computed: {
@@ -57,9 +59,14 @@ export default {
       }
       await axios(config)
           .then((response) => {
-            console.log(response.data)
             this.post = response.data
-            this.$store.dispatch('user/setIsImageUrl', this.post.imageUrl)
+            this.image = {
+              url: this.post.url,
+              name: this.post.name
+            };
+            this.nameImage = this.image.name;
+            console.log(this.nameImage)
+            this.$store.dispatch('user/setIsImage', this.image)
           })
           .catch((error) => {
             console.log(error)

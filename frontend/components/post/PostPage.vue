@@ -32,7 +32,7 @@ export default {
     return {
       POST,
       dataImage: null,
-      imageUrl: ''
+      image: null
     };
   },
   computed: {},
@@ -47,11 +47,22 @@ export default {
       reader.readAsDataURL(event[0]);
       reader.onload = (e) => {
         console.log(e)
-        this.imageUrl = e.target.result;
-        this.$store.dispatch('user/setIsImageUrl', this.imageUrl)
+        this.image = {
+          url: e.target.result,
+          name: this.replaceTypeImage(event[0].name)
+          };
+          console.log(this.image.name)
+        this.$store.dispatch('user/setIsImage', this.image)
       };
       this.$router.push("/post/post-input");
     },
+    replaceTypeImage(str) {
+      if(str.lastIndexOf('.') === (str.length - 1)){
+    str = str.substring(0, str.length - 1);
+}
+
+      return str;
+    }
   },
 };
 </script>
