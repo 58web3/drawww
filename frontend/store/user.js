@@ -3,7 +3,8 @@ export const state = () => ({
   home: '',
   post: '',
   dao: '',
-  imageUrl: ''
+  imageUrl: '',
+  tweetId: ''
 })
 
 export const mutations = {
@@ -22,6 +23,9 @@ export const mutations = {
   setIsImageUrl(state, imageUrl) {
     state.imageUrl = imageUrl
   },
+  setIsTweetId(state, tweetId) {
+    state.tweetId = tweetId
+  },
 }
 
 export const actions = {
@@ -36,6 +40,9 @@ export const actions = {
   },
   setIsImageUrl({ commit }, imageUrl) {
     commit('setIsImageUrl', imageUrl)
+  },
+  setIsTweetId({ commit }, tweetId) {
+    commit('setIsTweetId', tweetId)
   }
 }
 
@@ -54,6 +61,9 @@ export const getters = {
   },
   getImageUrl(state) {
     return state.imageUrl
+  },
+  getTweetId(state) {
+    return state.tweetId
   }
 }
 

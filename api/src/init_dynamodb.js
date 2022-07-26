@@ -19,18 +19,9 @@ const dynamodb = new AWS.DynamoDB.DocumentClient()
 
 const tables = [
   {
-    TableName: 'Twitter',
+    TableName: 'Post',
     KeySchema: [{ AttributeName: 'tweet_id', KeyType: 'HASH' }],
     AttributeDefinitions: [{ AttributeName: 'tweet_id', AttributeType: 'S' }],
-    ProvisionedThroughput: {
-      ReadCapacityUnits: 10,
-      WriteCapacityUnits: 10,
-    },
-  },
-  {
-    TableName: 'Posts',
-    KeySchema: [{ AttributeName: 'post_id', KeyType: 'HASH' }],
-    AttributeDefinitions: [{ AttributeName: 'post_id', AttributeType: 'S' }],
     ProvisionedThroughput: {
       ReadCapacityUnits: 10,
       WriteCapacityUnits: 10,

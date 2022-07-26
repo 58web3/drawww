@@ -3,7 +3,7 @@
     <div class="md-layout detail-layout">
       <div class="md-layout-item">
         <div class="detail">
-            <img :src="IMAGE" class="image"/>
+            <img :src="post.url" class="image"/>
             <span class="text-detail">かなたそ</span>
         </div>
         <div class="icon">
@@ -19,7 +19,6 @@
 
 <script>
 
-import IMAGE from '@/assets/image/example.png'
 import TWIITER from '@/assets/icons/twitter.png'
 export default {
   name: 'DeatailPage',
@@ -29,19 +28,42 @@ export default {
   props: {},
   data() {
     return {
-        IMAGE,
-        TWIITER
+        TWIITER,
+        post: null
     }
   },
-  computed: {},
+  computed: {
+    tweetId() {
+      return this.$store.getters['user/getTweetId']
+    }
+  },
   watch: {},
-  created() {
-
+  async created() {
+    await this.getPostDetail(this.tweetId)
   },
   mounted() {
 
   },
   methods: {
+    async getPostDetail(tweetId) {
+      const config = {
+        method: 'get',
+        url: `/v1/post/${tweetId}`,
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+      }
+      await axios(config)
+          .then((response) => {
+            console.log(response.data)
+            this.post = response.data
+            this.$store.dispatch('user/setIsImageUrl', this.post.imageUrl)
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+    },
     goToNFTMintPage() {
         this.$router.push('/nft')
     }

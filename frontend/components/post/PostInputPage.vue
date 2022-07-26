@@ -29,6 +29,7 @@ import IMAGE from '@/assets/image/example.png'
 import POST from '@/assets/icons/post.png'
 import EXIT from '@/assets/icons/exit.png'
 //const IPFS = require('ipfs')
+const axios = require('axios')
 export default {
   name: 'PostInputPage',
   components: {
@@ -40,7 +41,8 @@ export default {
         POST,
         IMAGE,
         EXIT,
-        dataImage: ''
+        dataImage: '',
+        tweetId: '',
     }
   },
   computed: {
@@ -66,7 +68,30 @@ export default {
       // for await (const { cid } of results) {
       //   console.log(cid.toString())
       // }
-      this.$router.push('/post/post-completed')
+
+      const data = {
+        imageUrl: this.dataImage
+      };
+
+      const config = {
+        method: 'post',
+        url: `/v1/post`,
+        data,
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+      }
+      await axios(config)
+          .then((response) => {
+            console.log(response.data)
+            this.tweetId = response.data.tweet_id
+            this.$store.dispatch('user/setIsTweetId', this.tweetId)
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      this.$router.push('/post/post-twitter')
     }
   },
 }

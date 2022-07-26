@@ -3,7 +3,7 @@
     <div class="md-layout marketplace-layout">
       <div class="md-layout-item">
         <div class="marketplace-item">
-            <img :src="IMAGE" class="image"/>
+            <img :src="dataImage" class="image"/>
             <span class="text-detail">かなたそ</span>
             <span class="text-title">NFT</span>
             <span class="text-detail">0x56A0c97FE2536dEc74de803b941eF2Cb3D504B54</span>
@@ -23,7 +23,6 @@
 
 <script>
 
-import IMAGE from '@/assets/image/example.png'
 export default {
   name: 'MarketPlacePage',
   components: {
@@ -32,16 +31,20 @@ export default {
   props: {},
   data() {
     return {
-        IMAGE
+        dataImage: ''
     }
   },
-  computed: {},
+  computed: {
+    imageUrl() {
+      return this.$store.getters['user/getImageUrl']
+    }
+  },
   watch: {},
   created() {
 
   },
   mounted() {
-
+    this.dataImage = this.imageUrl;
   },
   methods: {
     goToCompletedPage() {

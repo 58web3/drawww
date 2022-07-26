@@ -10,8 +10,12 @@
         >
           Logout
         </md-button>
-        <div class="home-detail" v-for="item in listImages" :key="item.id">
-          <img :src="item.url" class="image" @click="goToDetailPage" />
+        <div
+          class="home-detail"
+          v-for="item in listImages"
+          :key="item.tweet_id"
+        >
+          <img :src="item.url" class="image" @click="goToDetailPage(item.tweet_id)" />
         </div>
       </div>
     </div>
@@ -19,7 +23,6 @@
 </template>
 
 <script>
-import IMAGE from "@/assets/image/example.png";
 import { Web3Auth } from "@web3auth/web3auth";
 import { CHAIN_NAMESPACES } from "@web3auth/base";
 export default {
@@ -30,32 +33,7 @@ export default {
   data() {
     return {
       IMAGE,
-      listImages: [
-        {
-          id: "1",
-          url: IMAGE,
-        },
-        {
-          id: "2",
-          url: IMAGE,
-        },
-        {
-          id: "3",
-          url: IMAGE,
-        },
-        {
-          id: "4",
-          url: IMAGE,
-        },
-        {
-          id: "5",
-          url: IMAGE,
-        },
-        {
-          id: "6",
-          url: IMAGE,
-        },
-      ],
+      listImages: [],
       checkLogout: false,
       web3auth: null
     };
@@ -72,28 +50,46 @@ export default {
       },
     });
     console.log(this.web3auth);
+
+    const config = {
+      method: "get",
+      url: `/v1/post`,
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    };
+
+    axios(config)
+      .then((response) => {
+        this.listImages = response.data.posts;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
   mounted() {
-    this.web3auth.initModal()
-    let isLogin = sessionStorage.getItem('isLogin');
-    if(isLogin) {
-      this.checkLogout = true
+    this.web3auth.initModal();
+    let isLogin = sessionStorage.getItem("isLogin");
+    if (isLogin) {
+      this.checkLogout = true;
     } else {
-      this.checkLogout = false
+      this.checkLogout = false;
     }
     //this.$root.$emit("home-active");
   },
   methods: {
-    goToDetailPage() {
+    goToDetailPage(id) {
+      this.$store.dispatch('user/setIsTweetId', id)
       this.$router.push("/detail");
     },
     async logout() {
-      this.$store.dispatch('user/setUser', null)
-      sessionStorage.removeItem('user')
-      sessionStorage.setItem('isLogin', true);
-      await this.web3auth.logout()
-      this.$router.push('/')
-    }    
+      this.$store.dispatch("user/setUser", null);
+      sessionStorage.removeItem("user");
+      sessionStorage.setItem("isLogin", true);
+      await this.web3auth.logout();
+      this.$router.push("/");
+    },
   },
 };
 </script>

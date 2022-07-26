@@ -1,7 +1,6 @@
 const express = require("express");
 require("dotenv").config();
 var Twitter = require("twitter");
-const uuid = require("uuid");
 const router = express.Router();
 const dotenv = require("dotenv")
 
@@ -13,27 +12,15 @@ var client = new Twitter({
   bearer_token: process.env.BEARER_TOKEN,
 });
 
-router.post("/", async (req, res) => {
+router.post("/create", async (req, res) => {
   try {
     const requestJSON = req.body;
-    let tweetId = uuid.v4();
-    const systemDate = Date.now();
+    let tweetId = requestJSON.tweetId;
     const url = requestJSON.imageUrl;
-    const dataSave = await postTwitter(requestJSON.imageUrl);
 
-    const tweet = {
-      tweet_id: tweetId,
-      date: systemDate,
-      data: dataSave,
-      url: url
-    };
-
-    await dynamodb
-      .put({
-        TableName: "Twitter",
-        Item: tweet,
-      })
-      .promise();
+    if(tweetId) {
+      await postTwitter(url);
+    }
 
     res.json({ tweet_id: tweetId });
   } catch (e) {
