@@ -37,7 +37,7 @@ export default {
     this.tweetIdVal = this.tweetId;
   },
   methods: {
-   goToPostCompletePage() {
+   async goToPostCompletePage() {
       const data = {
         tweetId: this.tweetIdVal,
         imageUrl: this.dataImage

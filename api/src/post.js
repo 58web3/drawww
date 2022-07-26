@@ -2,6 +2,7 @@ const express = require("express");
 require("dotenv").config();
 const router = express.Router();
 const uuid = require("uuid");
+const dynamodb = require("./init_dynamodb");
 
 router.post("/", async (req, res) => {
   try {
@@ -16,6 +17,8 @@ router.post("/", async (req, res) => {
       url: url,
     };
 
+    console.log(tweet)
+
     await dynamodb
       .put({
         TableName: "Post",
@@ -23,6 +26,7 @@ router.post("/", async (req, res) => {
       })
       .promise();
 
+    console.log(res)
     res.json({ tweet_id: tweetId });
   } catch (e) {
     console.log(e);

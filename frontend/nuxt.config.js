@@ -35,6 +35,11 @@ export default {
     }]
   },
 
+  server: {
+    host: '0.0.0.0',
+    port: 3000,
+  },
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     { src: 'vue-material/dist/vue-material.min.css', lang: 'css' },
@@ -52,6 +57,27 @@ export default {
     // WEB3AUTH_RPC_TARGET: 'https://evm.shibuya.astar.network',
     WEB3AUTH_CHAIN_ID: '0x3',
     WEB3AUTH_RPC_TARGET: 'https://ropsten.infura.io/v3/ea106898e15c4ac19609a97045924e77',
+  },
+
+  // Modules: https://go.nuxtjs.dev/config-modules
+  modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/proxy',
+    '@nuxtjs/dotenv',
+    'nuxt-basic-auth-module',
+  ],
+
+  // Axios module configuration: https://go.nuxtjs.dev/config-axios
+  axios: {
+    proxy: true,
+  },
+  proxy: {
+    '/v1': {
+      target: process.env.API_URL,
+      pathRewrite: {
+        '^/v1': '/v1',
+      },
+    },
   },
 
   // Auto import components: https://go.nuxtjs.dev/config-components

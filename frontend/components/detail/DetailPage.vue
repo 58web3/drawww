@@ -20,6 +20,7 @@
 <script>
 
 import TWIITER from '@/assets/icons/twitter.png'
+const axios = require('axios')
 export default {
   name: 'DeatailPage',
   components: {

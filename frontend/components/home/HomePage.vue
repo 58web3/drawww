@@ -25,6 +25,7 @@
 <script>
 import { Web3Auth } from "@web3auth/web3auth";
 import { CHAIN_NAMESPACES } from "@web3auth/base";
+const axios = require('axios')
 export default {
   name: "HomePage",
   components: {},
@@ -32,7 +33,6 @@ export default {
   props: {},
   data() {
     return {
-      IMAGE,
       listImages: [],
       checkLogout: false,
       web3auth: null
@@ -63,6 +63,7 @@ export default {
     axios(config)
       .then((response) => {
         this.listImages = response.data.posts;
+        console.log('res', response.data)
       })
       .catch((error) => {
         console.log(error);

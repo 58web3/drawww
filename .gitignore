@@ -1,0 +1,13 @@
+﻿frontend/yarn.lock
+swagger/node_modules
+swagger/yarn.lock
+swagger/package-lock.json
+api/nodejs/node_modules
+api/nodejs/yarn.lock
+frontend/docker/dynamodb
+api/node_modules
+smartcontract/node_modules
+api/.env
+api/yarn.lock
+api/yarn-error.log
+bancor-contracts/yarn.lock

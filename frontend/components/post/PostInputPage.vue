@@ -1,23 +1,27 @@
 <template>
   <div class="post-input">
-    <div class="page-name">
-      投稿
-    </div>
+    <div class="page-name">投稿</div>
     <div class="md-layout post-layout">
       <div class="md-layout-item">
         <div class="post-box">
-            <span class="post-text">かなたそ</span>
-            <div class="image">
-                <img :src="dataImage" />
-                <img :src="EXIT" class="exit"/>
-            </div>
+          <span class="post-text">かなたそ</span>
+          <div class="image">
+            <img :src="dataImage" />
+            <img :src="EXIT" class="exit" />
+          </div>
         </div>
         <div class="info">
-            <img :src="POST" />
-            <span class="post-text">写真を選択</span>
+          <md-field>
+            <md-file
+              v-model="dataImage"
+              accept="image/*"
+              @md-change="onFileUpload($event)"
+              placeholder="写真を選択"
+            />
+          </md-field>
         </div>
         <md-button class="post-button" @click="goToPostCompletedPage">
-            投稿する
+          投稿する
         </md-button>
       </div>
     </div>
@@ -25,35 +29,32 @@
 </template>
 
 <script>
-import IMAGE from '@/assets/image/example.png'
-import POST from '@/assets/icons/post.png'
-import EXIT from '@/assets/icons/exit.png'
+import IMAGE from "@/assets/image/example.png";
+import POST from "@/assets/icons/post.png";
+import EXIT from "@/assets/icons/exit.png";
 //const IPFS = require('ipfs')
-const axios = require('axios')
+const axios = require("axios");
 export default {
-  name: 'PostInputPage',
-  components: {
-  },
+  name: "PostInputPage",
+  components: {},
   mixins: [],
   props: {},
   data() {
     return {
-        POST,
-        IMAGE,
-        EXIT,
-        dataImage: '',
-        tweetId: '',
-    }
+      POST,
+      IMAGE,
+      EXIT,
+      dataImage: "",
+      tweetId: "",
+    };
   },
   computed: {
     imageUrl() {
-      return this.$store.getters['user/getImageUrl']
-    }
+      return this.$store.getters["user/getImageUrl"];
+    },
   },
   watch: {},
-  created() {
-
-  },
+  created() {},
   mounted() {
     this.dataImage = this.imageUrl;
   },
@@ -69,33 +70,44 @@ export default {
       //   console.log(cid.toString())
       // }
 
-      const data = {
-        imageUrl: this.dataImage
+      let data = JSON.stringify({
+        imageUrl: this.dataImage,
+      });
+
+      let config = {
+        method: "post",
+        url: "/v1/post",
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        data: data,
       };
 
-      const config = {
-        method: 'post',
-        url: `/v1/post`,
-        data,
-        headers: {
-          'accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-      }
-      await axios(config)
-          .then((response) => {
-            console.log(response.data)
-            this.tweetId = response.data.tweet_id
-            this.$store.dispatch('user/setIsTweetId', this.tweetId)
-          })
-          .catch((error) => {
-            console.log(error)
-          })
-      this.$router.push('/post/post-twitter')
-    }
+      axios(config)
+        .then((response) => {
+          console.log(JSON.stringify(response.data));
+          this.tweetId = JSON.stringify(response.data.tweet_id);
+          this.$store.dispatch("user/setIsTweetId", this.tweetId);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      this.$router.push("/post/post-twitter");
+    },
+    onFileUpload(event) {
+      console.log(this.dataImage);
+      console.log(event[0]);
+      let reader = new FileReader();
+      reader.readAsDataURL(event[0]);
+      reader.onload = (e) => {
+        console.log(e);
+        this.imageUrl = e.target.result;
+        this.$store.dispatch("user/setIsImageUrl", this.imageUrl);
+      };
+    },
   },
-}
-
+};
 </script>
 
 <style lang="scss" scoped>
