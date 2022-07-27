@@ -3,6 +3,7 @@ require("dotenv").config();
 var Twitter = require("twitter");
 const router = express.Router();
 const dotenv = require("dotenv")
+const fs = require("fs")
 
 dotenv.config()
 
@@ -33,9 +34,10 @@ async function postTwitter(
   imageUrl
 ) {
   const imageData = fs.readFileSync(imageUrl)
+  const base64image = Buffer.from(imageData).toString('base64');
   let postData = null;
 
-  client.post("media/upload", {media: imageData}, function(error, media, response) {
+  client.post("media/upload", {media_data: base64image}, function(error, media, response) {
     if (error) {
       console.log(error)
     } else {

@@ -36,10 +36,11 @@ export default {
     }
   },
   watch: {},
-  created() {},
+  created() {
+    this.dataImage = this.image.url;
+  },
   mounted() {
     this.tweetIdVal = this.tweetId;
-    this.dataImage = this.image.url;
   },
   methods: {
    async goToPostCompletePage() {

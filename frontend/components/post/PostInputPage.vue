@@ -13,7 +13,7 @@
         <div class="info">
           <md-field>
             <md-file
-              v-model="dataImage"
+              
               accept="image/*"
               @md-change="onFileUpload($event)"
               placeholder="写真を選択"
@@ -34,6 +34,7 @@ import POST from "@/assets/icons/post.png";
 import EXIT from "@/assets/icons/exit.png";
 //const IPFS = require('ipfs')
 const axios = require("axios");
+//import { create } from 'ipfs-http-client'
 export default {
   name: "PostInputPage",
   components: {},
@@ -46,7 +47,8 @@ export default {
       EXIT,
       dataImage: "",
       tweetId: "",
-      nameImage: ''
+      nameImage: '',
+      updateFileUrl: ''
     };
   },
   computed: {
@@ -73,6 +75,12 @@ export default {
       //   console.log(cid.toString())
       // }
 
+      // const client = create('https://ipfs.infura.io:5001/api/v0')
+      // const added = await client.add(file)
+      // const url = `https://ipfs.infura.io/ipfs/${added.path}`
+
+      //this.updateFileUrl = url;
+      
       let data = {
         image: this.image,
       };
@@ -99,7 +107,7 @@ export default {
       this.$router.push("/post/post-twitter");
     },
     onFileUpload(event) {
-      console.log(this.dataImage);
+      //console.log(this.dataImage);
       console.log(event[0]);
       let reader = new FileReader();
       reader.readAsDataURL(event[0]);
