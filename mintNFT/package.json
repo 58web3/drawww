@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "start": "node src/index.js"
+  },
   "dependencies": {
     "@alch/alchemy-web3": "^1.4.6",
     "@openzeppelin/contracts": "^4.7.1",

@@ -1,10 +1,14 @@
 async function main() {
-  const MyNFT = await ethers.getContractFactory("MyNFT");
+  const [deployer] = await ethers.getSigners();
 
-  // Start deployment, returning a promise that resolves to a contract object
-  const myNFT = await MyNFT.deploy();
-  await myNFT.deployed();
-  console.log("Contract deployed to address:", myNFT.address);
+  console.log("Deploying contracts with the account:", deployer.address);
+
+  console.log("Account balance:", (await deployer.getBalance()).toString());
+
+  const Token = await ethers.getContractFactory("Token");
+  const token = await Token.deploy();
+
+  console.log("Token address:", token.address);
 }
 
 main()
