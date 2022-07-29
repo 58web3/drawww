@@ -35,6 +35,7 @@ import EXIT from "@/assets/icons/exit.png";
 //const IPFS = require('ipfs')
 const axios = require("axios");
 //import { create } from 'ipfs-http-client'
+const FormData = require('form-data');
 export default {
   name: "PostInputPage",
   components: {},
@@ -48,19 +49,21 @@ export default {
       dataImage: "",
       tweetId: "",
       nameImage: '',
-      updateFileUrl: ''
+      updateFile: null
     };
   },
   computed: {
     image() {
       return this.$store.getters["user/getImage"];
     },
+    file() {
+      return this.$store.getters["user/getFile"];
+    }
   },
   watch: {},
   created() {},
   mounted() {
     this.nameImage = this.image.name;
-    console.log(this.nameImage)
     this.dataImage = this.image.url;
   },
   methods: {
@@ -80,19 +83,22 @@ export default {
       // const url = `https://ipfs.infura.io/ipfs/${added.path}`
 
       //this.updateFileUrl = url;
-      
-      let data = {
-        image: this.image,
-      };
+
+      let formData = new FormData();
+      // console.log(this.updateFile)
+      formData.append("file", this.file);
+      // console.log(formData)
+
+      // let data = {
+      //   image: this.image,
+      //   formData: formData
+      // };
 
       let config = {
         method: "post",
         url: "/v1/post",
-        headers: { 
-          'accept': 'application/json', 
-          'Content-Type': 'application/json'
-        },
-        data: data,
+        data: formData,
+        headers: {},
       };
 
       axios(config)
@@ -104,11 +110,56 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+
+        // let formData = new FormData();
+        //     formData.append('file', this.updateFile);
+        //     console.log(formData)
+  
+        // const formData = new FormData();
+        // formData.append("data", this.file);
+        // axios.post('/v1/post', formData, {
+        //     headers: {
+        //       'Content-Type': 'multipart/form-data'
+        //     }
+        // }).then((response) => {
+        //   console.log(response.data);
+        //   this.tweetId = response.data.tweet_id;
+        //   this.$store.dispatch("user/setIsTweetId", this.tweetId);
+        // })
+        // .catch((error) => {
+        //   console.log(error);
+        // });
+        // fetch('/v1/post', {  
+        //   headers: {
+        //     'Accept': 'application/json',
+        //     'Content-Type': 'multipart/form-data'
+        //   },
+        //   method: 'POST',
+        //   body: formData
+        // }).then((response) => {
+        //   console.log(response.data);
+        //   this.tweetId = response.data.tweet_id;
+        //   this.$store.dispatch("user/setIsTweetId", this.tweetId);
+        // })
+        // .catch((error) => {
+        //   console.log(error);
+        // });;
+
+        // axios.post('/v1/post', formData, {
+        //     headers: formData.getHeaders()
+        // }).then((response) => {
+        //   console.log(response.data);
+        //   this.tweetId = response.data.tweet_id;
+        //   this.$store.dispatch("user/setIsTweetId", this.tweetId);
+        // })
+        // .catch((error) => {
+        //   console.log(error);
+        // });
       this.$router.push("/post/post-twitter");
     },
     onFileUpload(event) {
-      //console.log(this.dataImage);
-      console.log(event[0]);
+      this.$store.dispatch("user/setIsFile", event[0]);
+      this.updateFile = event[0];
       let reader = new FileReader();
       reader.readAsDataURL(event[0]);
       reader.onload = (e) => {

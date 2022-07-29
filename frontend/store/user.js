@@ -4,7 +4,8 @@ export const state = () => ({
   post: '',
   dao: '',
   image: null,
-  tweetId: ''
+  tweetId: '',
+  file: null
 })
 
 export const mutations = {
@@ -26,6 +27,9 @@ export const mutations = {
   setIsTweetId(state, tweetId) {
     state.tweetId = tweetId
   },
+  setIsFile(state, file) {
+    state.file = file
+  },
 }
 
 export const actions = {
@@ -43,6 +47,9 @@ export const actions = {
   },
   setIsTweetId({ commit }, tweetId) {
     commit('setIsTweetId', tweetId)
+  },
+  setIsFile({ commit }, file) {
+    commit('setIsFile', file)
   }
 }
 
@@ -64,6 +71,9 @@ export const getters = {
   },
   getTweetId(state) {
     return state.tweetId
+  },
+  getFile(state) {
+    return state.file
   }
 }
 

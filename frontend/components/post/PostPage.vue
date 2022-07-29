@@ -32,7 +32,7 @@ export default {
     return {
       POST,
       dataImage: null,
-      image: null
+      image: null,
     };
   },
   computed: {},
@@ -41,28 +41,27 @@ export default {
   mounted() {},
   methods: {
     onFileUpload(event) {
-      console.log(this.dataImage);
       console.log(event[0]);
+      this.$store.dispatch("user/setIsFile", event[0]);
       let reader = new FileReader();
       reader.readAsDataURL(event[0]);
       reader.onload = (e) => {
-        console.log(e)
+        console.log(e);
         this.image = {
           url: e.target.result,
-          name: this.replaceTypeImage(event[0].name)
-          };
-          console.log(this.image.name)
-        this.$store.dispatch('user/setIsImage', this.image)
+          name: this.replaceTypeImage(event[0].name),
+        };
+        console.log(this.image.name);
+        this.$store.dispatch("user/setIsImage", this.image);
       };
       this.$router.push("/post/post-input");
     },
     replaceTypeImage(str) {
-      if(str.lastIndexOf('.') === (str.length - 1)){
-    str = str.substring(0, str.length - 1);
-}
-
+      if (str.lastIndexOf(".") === str.length - 1) {
+        str = str.substring(0, str.length - 1);
+      }
       return str;
-    }
+    },
   },
 };
 </script>

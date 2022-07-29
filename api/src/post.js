@@ -2,23 +2,34 @@ const express = require("express");
 require("dotenv").config();
 const router = express.Router();
 const uuid = require("uuid");
+//const IPFS = require("ipfs");
 const dynamodb = require("./init_dynamodb");
+//import { create } from 'ipfs-http-client'
+const create = require("ipfs-http-client");
 
 router.post("/", async (req, res) => {
   try {
-    const requestJSON = req.body;
+    const file = req.file;
+    console.log('req', req.body)
+    console.log('req', req.file)
+    console.log('req', req.files)
     let tweetId = uuid.v4();
     const systemDate = Date.now();
-    const image = requestJSON.image;
+    //const image = requestJSON.image;
+
+    const client = create.create('https://ipfs.infura.io:5001/api/v0');
+
+    const added = await client.add(file)
+    const url = `https://ipfs.infura.io/ipfs/${added.path}`
+
+    console.log('url', url)
 
     const tweet = {
       tweet_id: tweetId,
       date: systemDate,
-      url: image.url,
-      name: image.name
+      url: url,
+      //name: image.name,
     };
-
-    console.log(tweet)
 
     await dynamodb
       .put({
@@ -27,8 +38,9 @@ router.post("/", async (req, res) => {
       })
       .promise();
 
-    console.log(res)
+    console.log(res);
     res.json({ tweet_id: tweetId });
+    //res.send({ tweet_id: tweetId , file});
   } catch (e) {
     console.log(e);
     res.status(500).send(e);
