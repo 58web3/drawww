@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const twitter = require('./twitter')
+const post = require('./post')
 
 // for parsing application/json
 app.use(express.json())
@@ -8,6 +9,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 app.use('/v1/twitter', twitter)
+app.use('/v1/post', post)
 
 app.use((err, req, res, next) => {
   console.error(err.stack)
