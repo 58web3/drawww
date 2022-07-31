@@ -1,12 +1,12 @@
 <template>
   <div class="post-completed">
     <div class="page-name">
-      Twitter投稿完了
+      投稿完了
     </div>
     <div class="md-layout post-layout">
       <div class="md-layout-item">
-        <md-button class="post-button">
-            閲覧する
+        <md-button class="post-button" @click="goToPostCompletePage">
+            Twitterに投稿
         </md-button>
       </div>
     </div>
@@ -14,21 +14,59 @@
 </template>
 
 <script>
-
+const axios = require('axios')
 export default {
-  name: 'PostCompletedPage',
+  name: 'PostTwitterPage',
   components: {
   },
   mixins: [],
   props: {},
   data() {
-    return {}
+    return {
+      tweetIdVal: '',
+      dataImage: ''
+    }
   },
-  computed: {},
+  computed: {
+    tweetId() {
+      return this.$store.getters['user/getTweetId']
+    },
+    image() {
+      return this.$store.getters["user/getImage"];
+    }
+  },
   watch: {},
-  created() {},
-  mounted() {},
+  created() {
+    this.dataImage = this.image.url;
+  },
+  mounted() {
+    this.tweetIdVal = this.tweetId;
+  },
   methods: {
+   async goToPostCompletePage() {
+      const data = {
+        tweetId: this.tweetIdVal,
+        imageUrl: this.dataImage
+      };
+
+      const config = {
+        method: 'post',
+        url: `/v1/twitter/create`,
+        data,
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+      }
+      await axios(config)
+          .then((response) => {
+            console.log(response.data)
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      this.$router.push('/post/post-completed')
+    } 
   },
 }
 </script>

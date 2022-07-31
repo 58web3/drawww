@@ -3,8 +3,8 @@
     <div class="md-layout detail-layout">
       <div class="md-layout-item">
         <div class="detail">
-            <img :src="IMAGE" class="image"/>
-            <span class="text-detail">かなたそ</span>
+            <img :src="post.url" class="image"/>
+            <span class="text-detail">{{ nameImage }}</span>
         </div>
         <div class="icon">
            <img :src="TWIITER" class="twitter" />
@@ -19,8 +19,8 @@
 
 <script>
 
-import IMAGE from '@/assets/image/example.png'
 import TWIITER from '@/assets/icons/twitter.png'
+const axios = require('axios')
 export default {
   name: 'DeatailPage',
   components: {
@@ -29,19 +29,49 @@ export default {
   props: {},
   data() {
     return {
-        IMAGE,
-        TWIITER
+        TWIITER,
+        post: null,
+        image: null,
+        nameImage: ''
     }
   },
-  computed: {},
+  computed: {
+    tweetId() {
+      return this.$store.getters['user/getTweetId']
+    }
+  },
   watch: {},
-  created() {
-
+  async created() {
+    await this.getPostDetail(this.tweetId)
   },
   mounted() {
 
   },
   methods: {
+    async getPostDetail(tweetId) {
+      const config = {
+        method: 'get',
+        url: `/v1/post/${tweetId}`,
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+      }
+      await axios(config)
+          .then((response) => {
+            this.post = response.data
+            this.image = {
+              url: this.post.url,
+              name: this.post.name
+            };
+            this.nameImage = this.image.name;
+            console.log(this.nameImage)
+            this.$store.dispatch('user/setIsImage', this.image)
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+    },
     goToNFTMintPage() {
         this.$router.push('/nft')
     }

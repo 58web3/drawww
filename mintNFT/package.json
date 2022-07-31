@@ -1,0 +1,20 @@
+{
+  "name": "mintNFT",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "@alch/alchemy-web3": "^1.4.6",
+    "@openzeppelin/contracts": "^4.7.1",
+    "dotenv": "^16.0.1",
+    "solc": "^0.8.15"
+  },
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.1.0",
+    "ethers": "^5.0.0",
+    "hardhat": "^2.10.1"
+  }
+}

@@ -1,48 +1,27 @@
 const express = require("express");
 require("dotenv").config();
 var Twitter = require("twitter");
-const uuid = require("uuid");
 const router = express.Router();
-const Web3 = require("web3");
-const web3 = new Web3(
-  new Web3.providers.HttpProvider(process.env.EVM_RPC_TARGET)
-);
+const dotenv = require("dotenv")
+const fs = require("fs")
 
-const EXPLORER_URL = process.env.EXPLORER_URL;
+dotenv.config()
 
 var client = new Twitter({
-  consumer_key: "xGwoSRAdx8FQoc2WKYVGUsFtJ",
-  consumer_secret: "Ly0Bl8om7HGPToPjNoPp8KAlzhpmQiUTFJtmB9HW0tCAXWXhIv",
-  bearer_token:
-    "AAAAAAAAAAAAAAAAAAAAAD6zewEAAAAAY2m5dOB9nJGp3I%2FXqOZYvAqd%2Fpw%3DYwKOHI3nLvXxdxNtD0OZgw1bWGGanqvzgIw5pQ96iGOgylsh8z",
+  consumer_key: process.env.CONSUMER_KEY,
+  consumer_secret: process.env.CONSUMER_SECRET,
+  bearer_token: process.env.BEARER_TOKEN,
 });
 
-client
-  .post("update", { status: "I Love Twitter" })
-  .then(function (tweet) {
-    console.log(tweet);
-  })
-  .catch(function (error) {
-    throw error;
-  });
-
-router.post("/", async (req, res) => {
+router.post("/create", async (req, res) => {
   try {
     const requestJSON = req.body;
-    let tweetId = uuid.v4();
-    const systemDate = Date.now();
+    let tweetId = requestJSON.tweetId;
+    const url = requestJSON.imageUrl;
 
-    const tweet = {
-      tweet_id: tweetId,
-      date: systemDate,
-    };
-
-    await dynamodb
-      .put({
-        TableName: "Twitter",
-        Item: tweet,
-      })
-      .promise();
+    if(tweetId) {
+      await postTwitter(url);
+    }
 
     res.json({ tweet_id: tweetId });
   } catch (e) {
@@ -50,5 +29,36 @@ router.post("/", async (req, res) => {
     res.status(500).send(e);
   }
 });
+
+async function postTwitter(
+  imageUrl
+) {
+  const imageData = fs.readFileSync(imageUrl)
+  const base64image = Buffer.from(imageData).toString('base64');
+  let postData = null;
+
+  client.post("media/upload", {media_data: base64image}, function(error, media, response) {
+    if (error) {
+      console.log(error)
+    } else {
+      const status = {
+        status: "I tweeted from Node.js!",
+        media_ids: media.media_id_string
+      }
+
+      postData = status;
+  
+      client.post("statuses/update", status, function(error, tweet, response) {
+        if (error) {
+          console.log(error)
+        } else {
+          console.log("Successfully tweeted an image!")
+        }
+      })
+    }
+  })
+
+  return postData;
+}
 
 module.exports = router;
