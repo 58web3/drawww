@@ -3,11 +3,10 @@ const app = express()
 const twitter = require('./twitter')
 const post = require('./post')
 const bodyParser = require('body-parser');
-var fileUpload = require('express-fileupload')
-
+//var fileUpload = require('express-fileupload')
 // support parsing of application/json type post data
 app.use(bodyParser.json());
-app.use(fileUpload())
+// app.use(fileUpload())
 
 //support parsing of application/x-www-form-urlencoded post data
 app.use(bodyParser.urlencoded({ extended: true }));

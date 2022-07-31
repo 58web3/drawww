@@ -7,19 +7,21 @@ const dynamodb = require("./init_dynamodb");
 //import { create } from 'ipfs-http-client'
 const create = require("ipfs-http-client");
 
-router.post("/", async (req, res) => {
+const multer = require('multer');
+const upload = multer();
+
+
+router.post("/", upload.single("file"), async (req, res) => {
   try {
     const file = req.file;
-    console.log('req', req.body)
     console.log('req', req.file)
-    console.log('req', req.files)
     let tweetId = uuid.v4();
     const systemDate = Date.now();
     //const image = requestJSON.image;
 
     const client = create.create('https://ipfs.infura.io:5001/api/v0');
 
-    const added = await client.add(file)
+    const added = await client.add(file.buffer)
     const url = `https://ipfs.infura.io/ipfs/${added.path}`
 
     console.log('url', url)
