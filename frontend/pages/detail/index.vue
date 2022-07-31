@@ -1,14 +1,14 @@
 <template>
-  <Login/>
+  <DetailPage/>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import LoginPage from '@/components/Login.vue'
+import DetailPage from '@/components/detail/DetailPage.vue'
 export default Vue.extend({
   data() {
     return {
-      LoginPage
+      DetailPage
     }
   },
   name: 'IndexPage'

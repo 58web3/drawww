@@ -5,6 +5,7 @@
     <md-button
       class="md-raised md-primary login-button"
       style="width: 100%"
+      v-if="checkLogin"
       @click="login"
     >
       Login
@@ -29,12 +30,17 @@ export default {
       connecting: null,
       web3auth: null,
       provider: null,
-      user: {},
+      userData: {},
       userAccount: null,
       user_id: null,
+      checkLogin: true
     };
   },
-  computed: {},
+  computed: {
+    user() {
+      return this.$store.getters['user/getUser']
+    },
+  },
   watch: {},
   created() {
     this.loading = { value: false };
@@ -52,6 +58,10 @@ export default {
     console.log(this.web3auth);
   },
   mounted() {
+    this.userData = sessionStorage.getItem('user');
+    if(this.userData) {
+      this.checkLogin = false;
+    }
     try {
       this.loading.value = true;
       this.web3auth.initModal();
@@ -75,52 +85,24 @@ export default {
         this.userAccount = userAccounts[0];
       }
       await this.getUserInfo();
-      const user = this.user;
+      const user = this.userData;
+      this.$store.dispatch('user/setUser', user)
+      sessionStorage.setItem('user', JSON.stringify(user));
+
       console.log(user);
       console.log(this.userAccount);
+      this.$router.push('/home')
       if (!user) {
         return;
       }
-      // create user
-      const data = JSON.stringify({
-        email: user.email,
-        name: user.name,
-        profile_image: user.profileImage,
-        aggregate_verifier: user.aggregateVerifier,
-        verifier: user.verifier,
-        verifier_id: user.verifierId,
-        type_of_login: user.typeOfLogin,
-        last_name: "",
-        first_name: "",
-        wallet_address: this.userAccount,
-        wallet_created_at: 1655562492284,
-      });
-      const config = {
-        method: "post",
-        url: `/v1/users`,
-        data,
-        headers: {
-          accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      };
-      console.log(process.env.BASE_API);
-      axios(config)
-        .then((response) => {
-          console.log(JSON.stringify(response.data));
-          this.user_id = response.data.user_id;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
     },
     async getUserInfo() {
       if (!this.web3auth) {
         this.uiConsole("web3auth not initialized yet");
         return;
       }
-      this.user = await this.web3auth.getUserInfo();
-      this.uiConsole(this.user);
+      this.userData = await this.web3auth.getUserInfo();
+      this.uiConsole(this.userData);
     },
     async getAccounts() {
       if (!this.provider) {
@@ -146,7 +128,7 @@ export default {
   flex-direction: column;
 
   .login-header {
-    font-size: 32px;
+    font-size: 22px;
     line-height: 38px;
   }
   .login-button {

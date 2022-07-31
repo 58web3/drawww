@@ -1,27 +1,35 @@
 <template>
-  <div class="post">
+  <div class="post-input">
     <div class="page-name">
       投稿
     </div>
     <div class="md-layout post-layout">
       <div class="md-layout-item">
         <div class="post-box">
-            <span class="post-text">どんな出来ばえ？</span>
+            <span class="post-text">かなたそ</span>
+            <div class="image">
+                <img :src="IMAGE" />
+                <img :src="EXIT" class="exit"/>
+            </div>
         </div>
         <div class="info">
-            <img :src="POST" class="post-img" @click="goToPostInputPage"/>
+            <img :src="POST" />
             <span class="post-text">写真を選択</span>
         </div>
+        <md-button class="post-button" @click="goToPostCompletedPage">
+            投稿する
+        </md-button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-
+import IMAGE from '@/assets/image/example.png'
 import POST from '@/assets/icons/post.png'
+import EXIT from '@/assets/icons/exit.png'
 export default {
-  name: 'PostPage',
+  name: 'PostInputPage',
   components: {
   },
   mixins: [],
@@ -29,7 +37,8 @@ export default {
   data() {
     return {
         POST,
-        single: null
+        IMAGE,
+        EXIT
     }
   },
   computed: {},
@@ -41,8 +50,8 @@ export default {
 
   },
   methods: {
-    goToPostInputPage() {
-      this.$router.push('/post/post-input')
+    goToPostCompletedPage() {
+      this.$router.push('/post/post-completed')
     }
   },
 }
@@ -50,5 +59,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/scss/post";
+@import "@/assets/scss/post-input";
 </style>

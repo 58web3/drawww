@@ -2,7 +2,7 @@
   <div :key="keyRender" class="body-wrapper">
     <Header />
     <div class="wrapper">
-      <router-view />
+      <router-view keep-alive />
       </div>
     <Footer />
   </div>
@@ -34,8 +34,6 @@ export default {
 body {
   width: 375px !important;
   margin: 0 auto;
-  padding-left: 5px;
-  padding-right: 5px;
   background-color: #fff;
 }
 
@@ -45,5 +43,7 @@ body {
     top: 101px;
     bottom: 101px;
     position: absolute;
+    overflow-y: scroll;
+    overflow-x: none;
 }
 </style>
