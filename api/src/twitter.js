@@ -2,15 +2,16 @@ const express = require("express");
 require("dotenv").config();
 var Twitter = require("twitter");
 const router = express.Router();
-const dotenv = require("dotenv")
-const fs = require("fs")
+const dotenv = require("dotenv");
+const fs = require("fs");
 
-dotenv.config()
+dotenv.config();
 
 var client = new Twitter({
   consumer_key: process.env.CONSUMER_KEY,
   consumer_secret: process.env.CONSUMER_SECRET,
-  bearer_token: process.env.BEARER_TOKEN,
+  access_token_key: process.env.ACCESS_TOKEN_KEY,
+  access_token_secret: process.env.ACCESS_TOKEN_SECRET,
 });
 
 router.post("/create", async (req, res) => {
@@ -19,7 +20,7 @@ router.post("/create", async (req, res) => {
     let tweetId = requestJSON.tweetId;
     const url = requestJSON.imageUrl;
 
-    if(tweetId) {
+    if (tweetId) {
       await postTwitter(url);
     }
 
@@ -30,35 +31,17 @@ router.post("/create", async (req, res) => {
   }
 });
 
-async function postTwitter(
-  imageUrl
-) {
-  const imageData = fs.readFileSync(imageUrl)
-  const base64image = Buffer.from(imageData).toString('base64');
-  let postData = null;
+async function postTwitter(imageUrl) {
+  const postContent = imageUrl;
+  const params = { status: postContent };
 
-  client.post("media/upload", {media_data: base64image}, function(error, media, response) {
+  client.post("statuses/update", params, function (error, tweet, response) {
     if (error) {
-      console.log(error)
+      console.log(error);
     } else {
-      const status = {
-        status: "I tweeted from Node.js!",
-        media_ids: media.media_id_string
-      }
-
-      postData = status;
-  
-      client.post("statuses/update", status, function(error, tweet, response) {
-        if (error) {
-          console.log(error)
-        } else {
-          console.log("Successfully tweeted an image!")
-        }
-      })
+      console.log("Successfully tweeted an image!");
     }
-  })
-
-  return postData;
+  });
 }
 
 module.exports = router;
