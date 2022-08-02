@@ -68,31 +68,8 @@ export default {
   },
   methods: {
     async goToPostCompletedPage() {
-      // const node = await IPFS.create()
-
-      // const data = this.imageUrl
-
-      // const results = node.add(data)
-
-      // for await (const { cid } of results) {
-      //   console.log(cid.toString())
-      // }
-
-      // const client = create('https://ipfs.infura.io:5001/api/v0')
-      // const added = await client.add(file)
-      // const url = `https://ipfs.infura.io/ipfs/${added.path}`
-
-      //this.updateFileUrl = url;
-
       let formData = new FormData();
-      // console.log(this.updateFile)
       formData.append("file", this.file);
-      // console.log(formData)
-
-      // let data = {
-      //   image: this.image,
-      //   formData: formData
-      // };
 
       let config = {
         method: "post",
@@ -105,56 +82,17 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.tweetId = response.data.tweet_id;
+          const image = {
+            url: response.data.url,
+            name: response.data.name
+          }
+          console.log('image', image)
+          this.$store.dispatch("user/setIsImage", image);
           this.$store.dispatch("user/setIsTweetId", this.tweetId);
         })
         .catch((error) => {
           console.log(error);
         });
-
-        // let formData = new FormData();
-        //     formData.append('file', this.updateFile);
-        //     console.log(formData)
-  
-        // const formData = new FormData();
-        // formData.append("data", this.file);
-        // axios.post('/v1/post', formData, {
-        //     headers: {
-        //       'Content-Type': 'multipart/form-data'
-        //     }
-        // }).then((response) => {
-        //   console.log(response.data);
-        //   this.tweetId = response.data.tweet_id;
-        //   this.$store.dispatch("user/setIsTweetId", this.tweetId);
-        // })
-        // .catch((error) => {
-        //   console.log(error);
-        // });
-        // fetch('/v1/post', {  
-        //   headers: {
-        //     'Accept': 'application/json',
-        //     'Content-Type': 'multipart/form-data'
-        //   },
-        //   method: 'POST',
-        //   body: formData
-        // }).then((response) => {
-        //   console.log(response.data);
-        //   this.tweetId = response.data.tweet_id;
-        //   this.$store.dispatch("user/setIsTweetId", this.tweetId);
-        // })
-        // .catch((error) => {
-        //   console.log(error);
-        // });;
-
-        // axios.post('/v1/post', formData, {
-        //     headers: formData.getHeaders()
-        // }).then((response) => {
-        //   console.log(response.data);
-        //   this.tweetId = response.data.tweet_id;
-        //   this.$store.dispatch("user/setIsTweetId", this.tweetId);
-        // })
-        // .catch((error) => {
-        //   console.log(error);
-        // });
       this.$router.push("/post/post-twitter");
     },
     onFileUpload(event) {
