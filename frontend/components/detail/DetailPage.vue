@@ -10,7 +10,7 @@
            <img :src="TWIITER" class="twitter" />
         </div>
         <md-button class="detail-button" @click="goToNFTMintPage">
-            投稿する
+            NFTをMintする
         </md-button>
       </div>
     </div>

@@ -35,14 +35,7 @@ export default {
       return this.$store.getters["user/getImage"];
     }
   },
-  watch: {
-    // tweetId() {
-    //   return this.$store.getters['user/getTweetId']
-    // },
-    // image() {
-    //   return this.$store.getters["user/getImage"];
-    // }
-  },
+  watch: {},
   created() {},
   mounted() {},
   methods: {
@@ -51,8 +44,6 @@ export default {
         tweetId: this.tweetId,
         imageUrl: this.image.url
       };
-
-      console.log('data', data)
 
       const config = {
         method: 'post',
