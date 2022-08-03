@@ -7,8 +7,8 @@ async function main() {
 
   console.log("Account balance:", (await deployer.getBalance()).toString());
 
-  const Token = await ethers.getContractFactory("Token");
-  const token = await Token.deploy();
+  const Token = await ethers.getContractFactory("NFTImplementERC721");
+  const token = await Token.deploy("drawww", "drawww");
 
   console.log("Token address:", token.address);
 }

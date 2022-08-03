@@ -4,7 +4,7 @@
 
 ```bash
 # Deploy NFT
-$ npx hardhat --network goerli run src/index.js
+$ npx hardhat run src/deploy.js
 
 # Run mint NFT
 $ node src/mint-nft.json

@@ -27,8 +27,8 @@
 <script>
 const axios = require("axios");
 const Web3 = require("web3");
-let web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
-import contract from "../../../mintNFT/artifacts/contracts/MyNFT.sol/NFTImplementERC721.json";
+let web3 = new Web3(Web3.givenProvider || "http://localhost:7545");
+import contract from "../../../mintNFT/artifacts/contracts/NFTImplementERC721.sol/NFTImplementERC721.json";
 const abi = contract.abi;
 const NFT_USE_ERC721_ADDRESS_CONTRACT =
   process.env.NFT_USE_ERC721_ADDRESS_CONTRACT;
@@ -41,7 +41,7 @@ export default {
   props: {},
   data() {
     return {
-      TWIITER,
+      // TWIITER,
       post: null,
       imageData: null,
       nameImage: "",
@@ -92,12 +92,17 @@ export default {
         NFT_USE_ERC721_ADDRESS_CONTRACT
       );
       let transactionHash = "";
-      let urlMetaData = this.image;
+      let urlMetaData = this.imageData.url;
+
+      const gasLimit = await nftErc721.methods.mintSingleNFT(urlMetaData).estimateGas({from: this.account});
+      const gasPrice = await web3.eth.getGasPrice(); 
+
       await nftErc721.methods
         .mintSingleNFT(urlMetaData)
         .send({
           from: this.account,
-          gasLimit: Number(GAS_LIMIT),
+          gasLimit,
+          gasPrice,
         })
         .on("transactionHash", function (hash) {
           transactionHash = hash;

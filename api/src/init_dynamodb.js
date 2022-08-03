@@ -12,6 +12,13 @@ if (process.env.USE_DYNAMODB_LOCAL == "true") {
   })
   AWS.config = myConfig
 } else {
+  const myConfig = new AWS.Config({
+    credentials: {
+      accessKeyId: process.env.ACCESS_KEY,
+      secretAccessKey: process.env.SECRET_KEY,
+    },
+  })
+  AWS.config = myConfig
   AWS.config.region = 'ap-northeast-1';
 }
 
