@@ -3,14 +3,21 @@
     <div class="md-layout detail-layout">
       <div class="md-layout-item">
         <div class="detail">
-            <img :src="post.url" class="image"/>
-            <span class="text-detail">{{ nameImage }}</span>
+          <img :src="post.url" class="image" />
+          <span class="text-detail">{{ nameImage }}</span>
         </div>
         <div class="icon">
-           <img :src="TWIITER" class="twitter" />
+          <img :src="TWIITER" class="twitter" />
         </div>
-        <md-button class="detail-button" @click="goToNFTMintPage">
-            NFTをMintする
+        <md-button
+          class="detail-button metamask-button"
+          v-if="isMetamask"
+          @click="connectMetamask"
+        >
+          Connect Metamask
+        </md-button>
+        <md-button class="detail-button" v-if="!isMetamask" @click="goToNFTMintPage">
+          NFTをMintする
         </md-button>
       </div>
     </div>
@@ -18,66 +25,98 @@
 </template>
 
 <script>
-
-import TWIITER from '@/assets/icons/twitter.png'
-const axios = require('axios')
+const axios = require("axios");
+const Web3 = require("web3");
+let web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
+import contract from "../../../mintNFT/artifacts/contracts/MyNFT.sol/NFTImplementERC721.json";
+const abi = contract.abi;
+const NFT_USE_ERC721_ADDRESS_CONTRACT =
+  process.env.NFT_USE_ERC721_ADDRESS_CONTRACT;
+const ETHERSCAN_TRANSACTION_LINK = process.env.ETHERSCAN_TRANSACTION_LINK;
+const GAS_LIMIT = 420000;
 export default {
-  name: 'DeatailPage',
-  components: {
-  },
+  name: "DeatailPage",
+  components: {},
   mixins: [],
   props: {},
   data() {
     return {
-        TWIITER,
-        post: null,
-        image: null,
-        nameImage: ''
-    }
+      TWIITER,
+      post: null,
+      imageData: null,
+      nameImage: "",
+      account: "",
+      isMetamask: false
+    };
   },
   computed: {
     tweetId() {
-      return this.$store.getters['user/getTweetId']
+      return this.$store.getters["user/getTweetId"];
     }
   },
   watch: {},
   async created() {
-    await this.getPostDetail(this.tweetId)
+    await this.getPostDetail(this.tweetId);
   },
   mounted() {
-
+    this.isMetamask = typeof window.ethereum !== "undefined";
   },
   methods: {
     async getPostDetail(tweetId) {
       const config = {
-        method: 'get',
+        method: "get",
         url: `/v1/post/${tweetId}`,
         headers: {
-          'accept': 'application/json',
-          'Content-Type': 'application/json',
+          accept: "application/json",
+          "Content-Type": "application/json",
         },
-      }
+      };
       await axios(config)
-          .then((response) => {
-            this.post = response.data
-            this.image = {
-              url: this.post.url,
-              name: this.post.name
-            };
-            this.nameImage = this.image.name;
-            console.log(this.nameImage)
-            this.$store.dispatch('user/setIsImage', this.image)
-          })
-          .catch((error) => {
-            console.log(error)
-          })
+        .then((response) => {
+          this.post = response.data;
+          this.imageData = {
+            url: this.post.url,
+            name: this.post.name,
+          };
+          this.nameImage = this.imageData.name;
+          console.log(this.nameImage);
+          this.$store.dispatch("user/setIsImage", this.imageData);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
-    goToNFTMintPage() {
-        this.$router.push('/nft')
-    }
+    async goToNFTMintPage() {
+      const nftErc721 = new web3.eth.Contract(
+        abi,
+        NFT_USE_ERC721_ADDRESS_CONTRACT
+      );
+      let transactionHash = "";
+      let urlMetaData = this.image;
+      await nftErc721.methods
+        .mintSingleNFT(urlMetaData)
+        .send({
+          from: this.account,
+          gasLimit: Number(GAS_LIMIT),
+        })
+        .on("transactionHash", function (hash) {
+          transactionHash = hash;
+        })
+        .on("receipt", function (receipt) {
+          console.log("this is recept ether", receipt);
+        });
+      console.log(transactionHash);
+      this.$router.push("/nft");
+    },
+    async connectMetamask() {
+      const accounts = await window.ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      this.account = accounts[0];
+      this.isMetamask = false
+    },
   },
-}
-
+};
 </script>
 
 <style lang="scss" scoped>
