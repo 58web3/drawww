@@ -7,16 +7,9 @@
           <span class="text-detail">{{ nameImage }}</span>
         </div>
         <div class="icon">
-          <img :src="TWIITER" class="twitter" />
+          <img :src="TWITTER" class="twitter" />
         </div>
-        <md-button
-          class="detail-button metamask-button"
-          v-if="isMetamask"
-          @click="connectMetamask"
-        >
-          Connect Metamask
-        </md-button>
-        <md-button class="detail-button" v-if="!isMetamask" @click="goToNFTMintPage">
+        <md-button class="detail-button" @click="goToNFTMintPage">
           NFTをMintする
         </md-button>
       </div>
@@ -25,6 +18,7 @@
 </template>
 
 <script>
+import TWITTER from "@/assets/icons/twitter.png";
 const axios = require("axios");
 const Web3 = require("web3");
 let web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
@@ -32,8 +26,9 @@ import contract from "../../../mintNFT/artifacts/contracts/MyNFT.sol/NFTImplemen
 const abi = contract.abi;
 const NFT_USE_ERC721_ADDRESS_CONTRACT =
   process.env.NFT_USE_ERC721_ADDRESS_CONTRACT;
-const ETHERSCAN_TRANSACTION_LINK = process.env.ETHERSCAN_TRANSACTION_LINK;
-const GAS_LIMIT = 420000;
+const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS;
+// const ETHERSCAN_TRANSACTION_LINK = process.env.ETHERSCAN_TRANSACTION_LINK;
+const GAS_LIMIT = 4200000;
 export default {
   name: "DeatailPage",
   components: {},
@@ -41,26 +36,23 @@ export default {
   props: {},
   data() {
     return {
-      TWIITER,
+      TWITTER,
       post: null,
       imageData: null,
       nameImage: "",
       account: "",
-      isMetamask: false
     };
   },
   computed: {
     tweetId() {
       return this.$store.getters["user/getTweetId"];
-    }
+    },
   },
   watch: {},
   async created() {
     await this.getPostDetail(this.tweetId);
   },
-  mounted() {
-    this.isMetamask = typeof window.ethereum !== "undefined";
-  },
+  mounted() {},
   methods: {
     async getPostDetail(tweetId) {
       const config = {
@@ -87,16 +79,22 @@ export default {
         });
     },
     async goToNFTMintPage() {
+      const accounts = await window.ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      this.account = accounts[0];
+      console.log(this.account);
       const nftErc721 = new web3.eth.Contract(
         abi,
         NFT_USE_ERC721_ADDRESS_CONTRACT
       );
       let transactionHash = "";
-      let urlMetaData = this.image;
+      let urlMetaData = this.imageData.url;
       await nftErc721.methods
         .mintSingleNFT(urlMetaData)
         .send({
           from: this.account,
+          to: CONTRACT_ADDRESS,
           gasLimit: Number(GAS_LIMIT),
         })
         .on("transactionHash", function (hash) {
@@ -107,13 +105,6 @@ export default {
         });
       console.log(transactionHash);
       this.$router.push("/nft");
-    },
-    async connectMetamask() {
-      const accounts = await window.ethereum.request({
-        method: "eth_requestAccounts",
-      });
-      this.account = accounts[0];
-      this.isMetamask = false
     },
   },
 };
