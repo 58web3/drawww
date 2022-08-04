@@ -86,4 +86,52 @@ router.get("/:tweet_id", async (req, res) => {
   }
 });
 
+router.post("/contract", async (req, res) => {
+  try {
+    const systemDate = Date.now();
+    const tweet = {
+      tweet_id: req.tweet_id,
+      date: systemDate,
+      url: req.url,
+      name: req.name,
+      transaction_hash: req.transactionHash
+    };
+
+    await dynamodb
+      .put({
+        TableName: "Contract",
+        Item: tweet,
+      })
+      .promise();
+
+    console.log(res);
+    res.json({ tweet_id: tweet.tweet_id, url: tweet.url, name: tweet.name, transaction_hash: tweet.transaction_hash });
+  } catch (e) {
+    console.log(e);
+    res.status(500).send(e);
+  }
+});
+
+router.get("/contract/:tweet_id", async (req, res) => {
+  try {
+    console.log("tweet_id: " + req.params.tweet_id);
+    const dbUser = await dynamodb
+      .get({
+        TableName: "Contract",
+        Key: {
+          tweet_id: req.params.tweet_id,
+        },
+      })
+      .promise();
+
+    console.log(dbUser);
+    const contract = dbUser.Item;
+
+    res.json(contract);
+  } catch (e) {
+    console.log(e);
+    res.status(500).send(e);
+  }
+});
+
 module.exports = router;

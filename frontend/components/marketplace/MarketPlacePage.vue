@@ -45,7 +45,7 @@ export default {
 
   },
   mounted() {
-    this.dataImage = this.imageUrl;
+    this.dataImage = this.image.url;
     this.nameImage = this.image.name;
   },
   methods: {

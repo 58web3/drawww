@@ -105,6 +105,35 @@ export default {
           console.log("this is recept ether", receipt);
         });
       console.log(transactionHash);
+
+      if(transactionHash) {
+        const data = {
+          tweet_id: this.tweetId,
+          url: this.imageData.url,
+          name: this.imageData.name,
+          transactionHash: transactionHash
+        }
+
+        let config = {
+        method: "post",
+        url: "/v1/post/contract",
+        data,
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      };
+
+      axios(config)
+        .then((response) => {
+          console.log(response)
+          this.$store.dispatch("user/setIsTweetId", this.tweetId);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      }
+
       this.$router.push("/nft");
     },
   },
