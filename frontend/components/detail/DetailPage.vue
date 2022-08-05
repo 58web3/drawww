@@ -26,7 +26,6 @@ import contract from "../../../mintNFT/artifacts/contracts/NFTImplementERC721.so
 const abi = contract.abi;
 const NFT_USE_ERC721_ADDRESS_CONTRACT =
   process.env.NFT_USE_ERC721_ADDRESS_CONTRACT;
-const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS;
 // const ETHERSCAN_TRANSACTION_LINK = process.env.ETHERSCAN_TRANSACTION_LINK;
 const GAS_LIMIT = 4200000;
 export default {
@@ -114,6 +113,8 @@ export default {
           transactionHash: transactionHash
         }
 
+        console.log(data)
+
         let config = {
         method: "post",
         url: "/v1/post/contract",
@@ -127,7 +128,7 @@ export default {
       axios(config)
         .then((response) => {
           console.log(response)
-          this.$store.dispatch("user/setIsTweetId", this.tweetId);
+          this.$store.dispatch("user/setIsTweetId", response.data.tweet_id);
         })
         .catch((error) => {
           console.log(error);

@@ -90,11 +90,11 @@ router.post("/contract", async (req, res) => {
   try {
     const systemDate = Date.now();
     const tweet = {
-      tweet_id: req.tweet_id,
+      tweet_id: req.body.tweet_id,
       date: systemDate,
-      url: req.url,
-      name: req.name,
-      transaction_hash: req.transactionHash
+      url: req.body.url,
+      name: req.body.name,
+      transaction_hash: req.body.transactionHash
     };
 
     await dynamodb
