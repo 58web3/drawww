@@ -33,11 +33,15 @@
 
   .detail-button {
     border-radius: 20px;
-    margin: 30px auto 30px auto;
+    margin: 30px auto 50px auto;
     display: flex;
     width: 134px;
     height: 35px;
     background-color: #4D9DE8;
     color: #fff;
+  }
+
+  .metamask-button {
+    width: 180px;
   }
 }
