@@ -50,15 +50,6 @@ export default {
   plugins: [
     '@/plugins/vue-material',
   ],
-
-  env: {
-    WEB3AUTH_CLIENT_ID: 'BH6RbucXSjsZ9wX9rQLwdilwmEtOYvkGYrb462Ok26ZDMWOnIDaM2NBHj3OdspWV9ZY0CEFKTyPGUwlYhB4c2pU', // get from https://dashboard.web3auth.io
-    // WEB3AUTH_CHAIN_ID: '0x81',
-    // WEB3AUTH_RPC_TARGET: 'https://evm.shibuya.astar.network',
-    WEB3AUTH_CHAIN_ID: '0x3',
-    WEB3AUTH_RPC_TARGET: 'https://ropsten.infura.io/v3/ea106898e15c4ac19609a97045924e77',
-  },
-
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     proxy: true,

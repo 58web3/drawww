@@ -11,3 +11,7 @@ api/.env
 api/yarn.lock
 api/yarn-error.log
 bancor-contracts/yarn.lock
+mintNFT/yarn.lock
+mintNFT/node_modules
+mintNFT/artifacts
+mintNFT/.env
