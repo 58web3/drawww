@@ -88,24 +88,32 @@ router.get("/:tweet_id", async (req, res) => {
 
 router.post("/contract", async (req, res) => {
   try {
-    const systemDate = Date.now();
-    const tweet = {
-      tweet_id: req.body.tweet_id,
-      date: systemDate,
-      url: req.body.url,
-      name: req.body.name,
-      transaction_hash: req.body.transactionHash
+    const reqData = req.body;
+    const contract = {
+      tweet_id: reqData.tweet_id,
+      url: reqData.url,
+      name: reqData.name,
+      transaction_hash: reqData.transaction_hash,
+      token_id: reqData.token_id,
+      contract_address: reqData.contract_address,
+      date: reqData.date,
+      created_at: reqData.created_at,
+      updated_at: reqData.updated_at
     };
 
     await dynamodb
       .put({
         TableName: "Contract",
-        Item: tweet,
+        Item: contract,
       })
       .promise();
 
     console.log(res);
-    res.json({ tweet_id: tweet.tweet_id, url: tweet.url, name: tweet.name, transaction_hash: tweet.transaction_hash });
+    res.json({
+      tweet_id: contract.tweet_id,
+      url: contract.url,
+      name: contract.name,
+      transaction_hash: tweet.transaction_hash });
   } catch (e) {
     console.log(e);
     res.status(500).send(e);
@@ -128,6 +136,28 @@ router.get("/contract/:tweet_id", async (req, res) => {
     const contract = dbUser.Item;
 
     res.json(contract);
+  } catch (e) {
+    console.log(e);
+    res.status(500).send(e);
+  }
+});
+
+router.get("/contract/getAll", async (req, res) => {
+  try {
+    let contract = null;
+    let count = null;
+    await dynamodb
+      .scan({ TableName: "Contract" }, function (err, data) {
+        if (err) {
+          console.log("Error", err);
+        } else {
+          count = data.count;
+          contract = data.Items;
+        }
+      })
+      .promise();
+
+    res.json({ count, contract });
   } catch (e) {
     console.log(e);
     res.status(500).send(e);

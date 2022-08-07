@@ -11,7 +11,7 @@
             <span class="text-detail">{{ transactionHash }}</span>
         </div>
         <div class="link-box">
-          <span class="link">https:// ~ Open SeaなどのサイトURL</span>
+          <span class="link">{{ testUrl }}</span>
         </div>
         <md-button class="marketplace-button" @click="goToCompletedPage">
             出品先URLを登録
@@ -33,43 +33,42 @@ export default {
     return {
         dataImage: '',
         nameImage: '',
-        transactionHash: ''
+        transactionHash: '',
+        testUrl: 'https://testnets.opensea.io/assets/rinkeby/'
     }
   },
   computed: {
-    image() {
-      return this.$store.getters['user/getImage']
-    },
-    tweetId() {
-      return this.$store.getters["user/getTweetId"];
+    contractInfo() {
+      return this.$store.getters['user/getContractInfo']
     }
   },
   watch: {},
   created() {
-    await this.getContractDetail(this.tweetId);
+    //this.getContractDetail(this.tweetId);
   },
   mounted() {
-    this.dataImage = this.image.url;
-    this.nameImage = this.image.name;
+    this.dataImage = this.contractInfo.url;
+    this.nameImage = this.contractInfo.name;
+    this.transactionHash = this.contractInfo.transaction_hash;
   },
   methods: {
-    async getContractDetail(tweetId) {
-      const config = {
-        method: "get",
-        url: `/v1/post/contract/${tweetId}`,
-        headers: {
-          accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      };
-      await axios(config)
-        .then((response) => {
-          this.transactionHash = response.data.transaction_hash;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
+    // async getContractDetail(tweetId) {
+    //   const config = {
+    //     method: "get",
+    //     url: `/v1/post/contract/${tweetId}`,
+    //     headers: {
+    //       accept: "application/json",
+    //       "Content-Type": "application/json",
+    //     },
+    //   };
+    //   await axios(config)
+    //     .then((response) => {
+    //       this.transactionHash = response.data.transaction_hash;
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
+    // },
     goToCompletedPage() {
         this.$router.push('/market-completed')
     }

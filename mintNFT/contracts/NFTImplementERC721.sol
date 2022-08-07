@@ -47,7 +47,7 @@ contract NFTImplementERC721 is ERC721Enumerable, Ownable {
      * Create 1 new token and save token with tokenURI
      * and after mint it will increment token id
      */
-    function mintSingleNFT(string memory _tokenUri) public {
+    function mintSingleNFT(string memory _tokenUri) public returns (uint256){
         uint256 newTokenID = _tokenIds.current();
         if(newTokenID == 0){
           _tokenIds.increment();
@@ -57,6 +57,8 @@ contract NFTImplementERC721 is ERC721Enumerable, Ownable {
         _safeMint(msg.sender, newTokenID);
         _tokenToUris[newTokenID] = _tokenUri;
         _tokenIds.increment();
+
+        return newTokenID;
     }
 
     /*

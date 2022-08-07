@@ -5,7 +5,9 @@ export const state = () => ({
   dao: '',
   image: null,
   tweetId: '',
-  file: null
+  file: null,
+  saveContract: false,
+  contractInfo: null
 })
 
 export const mutations = {
@@ -30,6 +32,12 @@ export const mutations = {
   setIsFile(state, file) {
     state.file = file
   },
+  setIsSaveContract(state, saveContract) {
+    state.saveContract = saveContract
+  },
+  setIsContractInfo(state, contractInfo) {
+    state.contractInfo = contractInfo
+  },
 }
 
 export const actions = {
@@ -50,6 +58,12 @@ export const actions = {
   },
   setIsFile({ commit }, file) {
     commit('setIsFile', file)
+  },
+  setIsSaveContract({ commit }, saveContract) {
+    commit('setIsSaveContract', saveContract)
+  },
+  setIsContractInfo({ commit }, contractInfo) {
+    commit('setIsContractInfo', contractInfo)
   }
 }
 
@@ -74,6 +88,12 @@ export const getters = {
   },
   getFile(state) {
     return state.file
+  },
+  getSaveContract(state) {
+    return state.saveContract
+  },
+  getContractInfo(state) {
+    return state.contractInfo
   }
 }
 

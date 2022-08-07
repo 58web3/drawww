@@ -24,10 +24,7 @@ const Web3 = require("web3");
 let web3 = new Web3(Web3.givenProvider || "http://localhost:7545");
 import contract from "../../../mintNFT/artifacts/contracts/NFTImplementERC721.sol/NFTImplementERC721.json";
 const abi = contract.abi;
-const NFT_USE_ERC721_ADDRESS_CONTRACT =
-  process.env.NFT_USE_ERC721_ADDRESS_CONTRACT;
-// const ETHERSCAN_TRANSACTION_LINK = process.env.ETHERSCAN_TRANSACTION_LINK;
-const GAS_LIMIT = 4200000;
+const NFT_USE_ERC721_ADDRESS_CONTRACT = process.env.NFT_USE_ERC721_ADDRESS_CONTRACT;
 export default {
   name: "DeatailPage",
   components: {},
@@ -49,7 +46,7 @@ export default {
   },
   watch: {},
   async created() {
-    await this.getPostDetail(this.tweetId);
+    this.getPostDetail(this.tweetId);
   },
   mounted() {},
   methods: {
@@ -78,14 +75,17 @@ export default {
         });
     },
     async goToNFTMintPage() {
+      const systemDate = Date.now();
       const accounts = await window.ethereum.request({
         method: "eth_requestAccounts",
       });
+      console.log('feffewf', NFT_USE_ERC721_ADDRESS_CONTRACT)
       this.account = accounts[0];
       const nftErc721 = new web3.eth.Contract(
         abi,
         NFT_USE_ERC721_ADDRESS_CONTRACT
       );
+
       let transactionHash = "";
       let urlMetaData = this.imageData.url;
       const gasLimit = await nftErc721.methods.mintSingleNFT(urlMetaData).estimateGas({from: this.account});
@@ -101,19 +101,24 @@ export default {
           transactionHash = hash;
         })
         .on("receipt", function (receipt) {
-          console.log("this is recept ether", receipt);
+          console.log("this is recept ether", receipt.events);
+        })
+        .then(function(result) {
+          console.log('result', result)
         });
-      console.log(transactionHash);
 
       if(transactionHash) {
         const data = {
           tweet_id: this.tweetId,
           url: this.imageData.url,
           name: this.imageData.name,
-          transactionHash: transactionHash
+          transaction_hash: transactionHash,
+          token_id: null,
+          contract_address: NFT_USE_ERC721_ADDRESS_CONTRACT,
+          date: systemDate,
+          created_at: systemDate,
+          updated_at: systemDate,
         }
-
-        console.log(data)
 
         let config = {
         method: "post",
@@ -127,8 +132,8 @@ export default {
 
       axios(config)
         .then((response) => {
-          console.log(response)
-          this.$store.dispatch("user/setIsTweetId", response.data.tweet_id);
+          console.log(response.data)
+          this.$store.dispatch("user/setIsContractInfo", response.data);
         })
         .catch((error) => {
           console.log(error);
