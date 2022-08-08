@@ -30,7 +30,7 @@ export default {
   mounted() {},
   methods: {
     goToTwitterPage() {
-      this.$router.push('https://twitter.com/home');
+      window.location.href = 'https://twitter.com/home';
     }
   },
 }
