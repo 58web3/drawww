@@ -36,10 +36,10 @@ export default {
   created() {
     const config = {
       method: "get",
-      url: `/v1/post/contract/getAll`,
+      url: `/v1/post/contract`,
       headers: {
-        accept: "application/json",
-        "Content-Type": "application/json",
+        'accept': 'application/json', 
+        'Content-Type': 'application/json'
       },
     };
 

@@ -138,7 +138,7 @@ router.get("/contract/:tweet_id", async (req, res) => {
   }
 });
 
-router.get("/contract/getAll", async (req, res) => {
+router.get("/contract", async (req, res) => {
   try {
     let contract = null;
     let count = null;
