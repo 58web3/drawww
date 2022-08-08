@@ -24,11 +24,7 @@ const Web3 = require("web3");
 let web3 = new Web3(Web3.givenProvider || "http://localhost:7545");
 import contract from "../../../mintNFT/artifacts/contracts/NFTImplementERC721.sol/NFTImplementERC721.json";
 const abi = contract.abi;
-const NFT_USE_ERC721_ADDRESS_CONTRACT =
-  process.env.NFT_USE_ERC721_ADDRESS_CONTRACT;
 const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS;
-// const ETHERSCAN_TRANSACTION_LINK = process.env.ETHERSCAN_TRANSACTION_LINK;
-const GAS_LIMIT = 4200000;
 export default {
   name: "DeatailPage",
   components: {},
@@ -40,7 +36,7 @@ export default {
       post: null,
       imageData: null,
       nameImage: "",
-      account: "",
+      account: ""
     };
   },
   computed: {
@@ -50,7 +46,7 @@ export default {
   },
   watch: {},
   async created() {
-    await this.getPostDetail(this.tweetId);
+    this.getPostDetail(this.tweetId);
   },
   mounted() {},
   methods: {
@@ -79,18 +75,21 @@ export default {
         });
     },
     async goToNFTMintPage() {
+      const systemDate = Date.now();
       const accounts = await window.ethereum.request({
         method: "eth_requestAccounts",
       });
       this.account = accounts[0];
       const nftErc721 = new web3.eth.Contract(
         abi,
-        NFT_USE_ERC721_ADDRESS_CONTRACT
+        CONTRACT_ADDRESS
       );
+
       let transactionHash = "";
       let urlMetaData = this.imageData.url;
       const gasLimit = await nftErc721.methods.mintSingleNFT(urlMetaData).estimateGas({from: this.account});
       const gasPrice = await web3.eth.getGasPrice(); 
+      let tokenId;
       await nftErc721.methods
         .mintSingleNFT(urlMetaData)
         .send({
@@ -103,8 +102,45 @@ export default {
         })
         .on("receipt", function (receipt) {
           console.log("this is recept ether", receipt);
+        })
+        .then(function(result) {
+          console.log('result', result)
+          tokenId = result.events.Transfer.returnValues.tokenId;
         });
-      console.log(transactionHash);
+
+      if(transactionHash) {
+        const data = {
+          tweet_id: this.tweetId,
+          url: this.imageData.url,
+          name: this.imageData.name,
+          transaction_hash: transactionHash,
+          token_id: tokenId,
+          contract_address: CONTRACT_ADDRESS,
+          date: systemDate,
+          created_at: systemDate,
+          updated_at: systemDate,
+        }
+
+        let config = {
+        method: "post",
+        url: "/v1/post/contract",
+        data,
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      };
+
+      axios(config)
+        .then((response) => {
+          console.log(response.data)
+          this.$store.dispatch("user/setIsContractInfo", response.data.contract);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      }
+
       this.$router.push("/nft");
     },
   },

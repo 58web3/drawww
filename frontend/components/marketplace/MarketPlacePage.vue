@@ -4,14 +4,14 @@
       <div class="md-layout-item">
         <div class="marketplace-item">
             <img :src="dataImage" class="image"/>
-            <span class="text-detail">かなたそ</span>
+            <span class="text-detail">{{ nameImage }}</span>
             <span class="text-title">NFT</span>
-            <span class="text-detail">0x56A0c97FE2536dEc74de803b941eF2Cb3D504B54</span>
+            <span class="text-detail">{{ transactionHash }}</span>
             <span class="text-title">NFT 所有者</span>
-            <span class="text-detail">0x56A0c97FE2536dEc74de803b941eF2Cb3D504B54</span>
+            <span class="text-detail">{{ transactionHash }}</span>
         </div>
         <div class="link-box">
-          <span class="link">https:// ~ Open SeaなどのサイトURL</span>
+          <span class="link">{{ testUrl }}</span>
         </div>
         <md-button class="marketplace-button" @click="goToCompletedPage">
             出品先URLを登録
@@ -32,23 +32,44 @@ export default {
   data() {
     return {
         dataImage: '',
-        nameImage: ''
+        nameImage: '',
+        transactionHash: '',
+        testUrl: 'https://testnets.opensea.io/assets/rinkeby/'
     }
   },
   computed: {
-    image() {
-      return this.$store.getters['user/getImage']
+    contractInfo() {
+      return this.$store.getters['user/getContractInfo']
     }
   },
   watch: {},
   created() {
-
+    //this.getContractDetail(this.tweetId);
   },
   mounted() {
-    this.dataImage = this.imageUrl;
-    this.nameImage = this.image.name;
+    console.log(this.contractInfo)
+    this.dataImage = this.contractInfo.url;
+    this.nameImage = this.contractInfo.name;
+    this.transactionHash = this.contractInfo.transaction_hash;
   },
   methods: {
+    // async getContractDetail(tweetId) {
+    //   const config = {
+    //     method: "get",
+    //     url: `/v1/post/contract/${tweetId}`,
+    //     headers: {
+    //       accept: "application/json",
+    //       "Content-Type": "application/json",
+    //     },
+    //   };
+    //   await axios(config)
+    //     .then((response) => {
+    //       this.transactionHash = response.data.transaction_hash;
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
+    // },
     goToCompletedPage() {
         this.$router.push('/market-completed')
     }

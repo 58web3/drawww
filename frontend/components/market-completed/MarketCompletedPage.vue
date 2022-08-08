@@ -6,11 +6,11 @@
             <img :src="dataImage" class="image"/>
             <span class="text-detail">{{ nameImage }}</span>
             <span class="text-title">NFT</span>
-            <span class="text-detail">0x56A0c97FE2536dEc74de803b941eF2Cb3D504B54</span>
+            <span class="text-detail">{{ transactionHash }}</span>
             <span class="text-title">NFT 所有者</span>
-            <span class="text-detail">0x56A0c97FE2536dEc74de803b941eF2Cb3D504B54</span>
-            <span class="text-title">NFT マーケットプレイスURL</span>
-            <span class="text-detail">https://opensea.io/collection/veryuniverseanimals</span>
+            <span class="text-detail">{{ transactionHash }}</span>
+            <span class="text-title title-url">NFT マーケットプレイスURL</span>
+            <span class="text-detail link-url">{{ testUrl }}</span>
         </div>
       </div>
     </div>
@@ -28,12 +28,14 @@ export default {
   data() {
     return {
         dataImage: '',
-        nameImage: ''
+        nameImage: '',
+        transactionHash: '',
+        testUrl: 'https://testnets.opensea.io/assets/rinkeby/'
     }
   },
   computed: {
-    image() {
-      return this.$store.getters['user/getImage']
+    contractInfo() {
+      return this.$store.getters['user/getContractInfo']
     }
   },
   watch: {},
@@ -41,8 +43,9 @@ export default {
 
   },
   mounted() {
-    this.dataImage = this.image.url;
-    this.nameImage = this.image.name;
+    this.dataImage = this.contractInfo.url;
+    this.nameImage = this.contractInfo.name;
+    this.transactionHash = this.contractInfo.transaction_hash;
   },
   methods: {
   },

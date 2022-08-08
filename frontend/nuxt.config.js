@@ -50,6 +50,11 @@ export default {
   plugins: [
     '@/plugins/vue-material',
   ],
+
+  env: {
+    CONTRACT_ADDRESS: process.env.CONTRACT_ADDRESS
+  },
+
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     proxy: true,
@@ -67,8 +72,8 @@ export default {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
-    '@nuxtjs/dotenv',
     'nuxt-basic-auth-module',
+    '@nuxtjs/dotenv',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
