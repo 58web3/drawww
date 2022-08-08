@@ -73,6 +73,7 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
     'nuxt-basic-auth-module',
+    '@nuxtjs/dotenv',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
