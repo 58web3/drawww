@@ -32,9 +32,7 @@
 import IMAGE from "@/assets/image/example.png";
 import POST from "@/assets/icons/post.png";
 import EXIT from "@/assets/icons/exit.png";
-//const IPFS = require('ipfs')
 const axios = require("axios");
-//import { create } from 'ipfs-http-client'
 const FormData = require('form-data');
 export default {
   name: "PostInputPage",

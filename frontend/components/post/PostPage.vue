@@ -3,8 +3,11 @@
     <div class="page-name">投稿</div>
     <div class="md-layout post-layout">
       <div class="md-layout-item">
-        <div class="post-box">
-          <span class="post-text">どんな出来ばえ？</span>
+        <div>
+          <md-field>
+            <label>どんな出来ばえ？</label>
+            <md-textarea v-model="description"></md-textarea>
+          </md-field>
         </div>
         <div class="info">
           <md-field>
@@ -33,6 +36,7 @@ export default {
       POST,
       dataImage: null,
       image: null,
+      description: ''
     };
   },
   computed: {},
@@ -50,6 +54,7 @@ export default {
         this.image = {
           url: e.target.result,
           name: event[0].name,
+          description: this.description
         };
         this.$store.dispatch("user/setIsImage", this.image);
       };
