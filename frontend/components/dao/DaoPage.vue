@@ -2,21 +2,13 @@
   <div class="dao">
     <div class="md-layout dao-layout">
       <div class="md-layout-item">
-        <div class="dao-item">
-            <span class="label">#天音かなた</span>
-            <img :src="IMAGE" class="image"/>
-            <span class="text-title">総売り上げ額</span>
-            <span class="text-detail">143.47 ETH</span>
-            <span class="text-title">ロックアップ金額</span>
-            <span class="text-detail">89.22 ETH</span>
-        </div>
-        <div class="dao-item-2">
-            <span class="label">#初音ミク</span>
-            <img :src="IMAGE2" class="image"/>
-            <span class="text-title">総売り上げ額</span>
-            <span class="text-detail">972.47 ETH</span>
-            <span class="text-title">ロックアップ金額</span>
-            <span class="text-detail">875.21 ETH</span>
+        <div class="dao-item" v-for="item of listContract" :key="item.tweet_id">
+          <span class="label">#{{ item.name }}</span>
+          <img :src="item.url" class="image" />
+          <span class="text-title">総売り上げ額</span>
+          <span class="text-detail">143.47 ETH</span>
+          <span class="text-title">ロックアップ金額</span>
+          <span class="text-detail">89.22 ETH</span>
         </div>
       </div>
     </div>
@@ -24,33 +16,45 @@
 </template>
 
 <script>
-
-import IMAGE from '@/assets/image/example.png'
-import IMAGE2 from '@/assets/image/example2.png'
+import IMAGE from "@/assets/image/example.png";
+import IMAGE2 from "@/assets/image/example2.png";
+const axios = require("axios");
 export default {
-  name: 'DaoPage',
-  components: {
-  },
+  name: "DaoPage",
+  components: {},
   mixins: [],
   props: {},
   data() {
     return {
-        IMAGE,
-        IMAGE2
-    }
+      IMAGE,
+      IMAGE2,
+      listContract: [],
+    };
   },
   computed: {},
   watch: {},
   created() {
+    const config = {
+      method: "get",
+      url: `/v1/post/contract/getAll`,
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    };
 
+    axios(config)
+      .then((response) => {
+        console.log(response)
+        this.listContract = response.data.contract;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
-  mounted() {
-
-  },
-  methods: {
-  },
-}
-
+  mounted() {},
+  methods: {},
+};
 </script>
 
 <style lang="scss" scoped>

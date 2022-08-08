@@ -109,11 +109,7 @@ router.post("/contract", async (req, res) => {
       .promise();
 
     console.log(res);
-    res.json({
-      tweet_id: contract.tweet_id,
-      url: contract.url,
-      name: contract.name,
-      transaction_hash: tweet.transaction_hash });
+    res.json({ contract });
   } catch (e) {
     console.log(e);
     res.status(500).send(e);

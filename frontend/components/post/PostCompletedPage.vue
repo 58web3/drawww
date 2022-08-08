@@ -5,7 +5,7 @@
     </div>
     <div class="md-layout post-layout">
       <div class="md-layout-item">
-        <md-button class="post-button">
+        <md-button class="post-button" @click="goToTwitterPage">
             閲覧する
         </md-button>
       </div>
@@ -29,6 +29,9 @@ export default {
   created() {},
   mounted() {},
   methods: {
+    goToTwitterPage() {
+      this.$router.push('https://twitter.com/home');
+    }
   },
 }
 </script>

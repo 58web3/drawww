@@ -9,8 +9,8 @@
             <span class="text-detail">{{ transactionHash }}</span>
             <span class="text-title">NFT 所有者</span>
             <span class="text-detail">{{ transactionHash }}</span>
-            <span class="text-title">NFT マーケットプレイスURL</span>
-            <span class="text-detail">{{ testUrl }}</span>
+            <span class="text-title title-url">NFT マーケットプレイスURL</span>
+            <span class="text-detail link-url">{{ testUrl }}</span>
         </div>
       </div>
     </div>

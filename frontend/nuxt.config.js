@@ -57,6 +57,7 @@ export default {
     // WEB3AUTH_RPC_TARGET: 'https://evm.shibuya.astar.network',
     WEB3AUTH_CHAIN_ID: '0x3',
     WEB3AUTH_RPC_TARGET: 'https://ropsten.infura.io/v3/ea106898e15c4ac19609a97045924e77',
+    CONTRACT_ADDRESS: process.env.CONTRACT_ADDRESS
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -76,7 +77,6 @@ export default {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
-    '@nuxtjs/dotenv',
     'nuxt-basic-auth-module',
   ],
 

@@ -4,7 +4,7 @@
       <div class="md-layout-item">
         <div class="marketplace-item">
             <img :src="dataImage" class="image"/>
-            <span class="text-detail">かなたそ</span>
+            <span class="text-detail">{{ nameImage }}</span>
             <span class="text-title">NFT</span>
             <span class="text-detail">{{ transactionHash }}</span>
             <span class="text-title">NFT 所有者</span>
@@ -47,6 +47,7 @@ export default {
     //this.getContractDetail(this.tweetId);
   },
   mounted() {
+    console.log(this.contractInfo)
     this.dataImage = this.contractInfo.url;
     this.nameImage = this.contractInfo.name;
     this.transactionHash = this.contractInfo.transaction_hash;
