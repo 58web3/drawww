@@ -10,6 +10,7 @@
           <span class="text-title">ロックアップ金額</span>
           <span class="text-detail">89.22 ETH</span>
         </div>
+        <span class="empty-data" v-if="listContract.length === 0">No contract data</span>
       </div>
     </div>
   </div>
