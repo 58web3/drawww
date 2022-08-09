@@ -68,12 +68,10 @@ export default {
     },
   },
   created() {
-    if (this.image) {
-      this.description = this.image.description;
-    }
   },
   mounted() {
     if (this.image) {
+      this.description = this.image.description;
       this.dataImage = this.image.url;
     }
   },
