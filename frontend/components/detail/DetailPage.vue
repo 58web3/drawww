@@ -36,7 +36,7 @@ export default {
       post: null,
       imageData: null,
       nameImage: "",
-      account: ""
+      account: "",
     };
   },
   computed: {
@@ -80,15 +80,14 @@ export default {
         method: "eth_requestAccounts",
       });
       this.account = accounts[0];
-      const nftErc721 = new web3.eth.Contract(
-        abi,
-        CONTRACT_ADDRESS
-      );
+      const nftErc721 = new web3.eth.Contract(abi, CONTRACT_ADDRESS);
 
       let transactionHash = "";
       let urlMetaData = this.imageData.url;
-      const gasLimit = await nftErc721.methods.mintSingleNFT(urlMetaData).estimateGas({from: this.account});
-      const gasPrice = await web3.eth.getGasPrice(); 
+      const gasLimit = await nftErc721.methods
+        .mintSingleNFT(urlMetaData)
+        .estimateGas({ from: this.account });
+      const gasPrice = await web3.eth.getGasPrice();
       let tokenId;
       await nftErc721.methods
         .mintSingleNFT(urlMetaData)
@@ -103,12 +102,12 @@ export default {
         .on("receipt", function (receipt) {
           console.log("this is recept ether", receipt);
         })
-        .then(function(result) {
-          console.log('result', result)
+        .then(function (result) {
+          console.log("result", result);
           tokenId = result.events.Transfer.returnValues.tokenId;
         });
 
-      if(transactionHash) {
+      if (transactionHash) {
         const data = {
           tweet_id: this.tweetId,
           url: this.imageData.url,
@@ -119,26 +118,28 @@ export default {
           date: systemDate,
           created_at: systemDate,
           updated_at: systemDate,
-        }
+        };
 
         let config = {
-        method: "post",
-        url: "/v1/post/contract",
-        data,
-        headers: {
-          accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      };
+          method: "post",
+          url: "/v1/contract",
+          data,
+          headers: {
+            accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        };
 
-      axios(config)
-        .then((response) => {
-          console.log(response.data)
-          this.$store.dispatch("user/setIsContractInfo", response.data.contract);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        axios(config)
+          .then((response) => {
+            this.$store.dispatch(
+              "user/setIsContractInfo",
+              response.data.contract
+            );
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
 
       this.$router.push("/nft");

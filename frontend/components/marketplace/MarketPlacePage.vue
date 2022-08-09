@@ -56,7 +56,7 @@ export default {
     // async getContractDetail(tweetId) {
     //   const config = {
     //     method: "get",
-    //     url: `/v1/post/contract/${tweetId}`,
+    //     url: `/v1/contract/${tweetId}`,
     //     headers: {
     //       accept: "application/json",
     //       "Content-Type": "application/json",
