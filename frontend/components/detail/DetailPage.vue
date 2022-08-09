@@ -89,6 +89,7 @@ export default {
       let urlMetaData = this.imageData.url;
       const gasLimit = await nftErc721.methods.mintSingleNFT(urlMetaData).estimateGas({from: this.account});
       const gasPrice = await web3.eth.getGasPrice(); 
+      let tokenId;
       await nftErc721.methods
         .mintSingleNFT(urlMetaData)
         .send({
@@ -104,6 +105,7 @@ export default {
         })
         .then(function(result) {
           console.log('result', result)
+          tokenId = result.events.Transfer.returnValues.tokenId;
         });
 
       if(transactionHash) {
@@ -112,7 +114,7 @@ export default {
           url: this.imageData.url,
           name: this.imageData.name,
           transaction_hash: transactionHash,
-          token_id: null,
+          token_id: tokenId,
           contract_address: CONTRACT_ADDRESS,
           date: systemDate,
           created_at: systemDate,
