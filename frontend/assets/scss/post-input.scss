@@ -9,22 +9,32 @@
   justify-content: center;
   flex-direction: column;
 
+  .exit-button {
+    .exit {
+      float: right;
+      margin-bottom: 25px;
+      margin-right: 20px;
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  .text-input {
+    margin: 0 auto;
+    width: 320px;
+
+    .md-textarea {
+      margin-top: 15px;
+    }
+  }
+
   .post-box {
     margin: 0 auto;
     width: 320px;
     min-height: 262px;
-    border: 1px solid rgba(0, 0, 0, 0.64);
 
-    .image {
-      padding: 6px 13px;
-
-      .exit {
-        position: absolute;
-        right: 35px;
-        top: 110px;
-        width: 14px;
-        height: 14px;
-      }
+    img {
+      width: 320px;
     }
   }
 

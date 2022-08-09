@@ -3,17 +3,21 @@
     <div class="page-name">投稿</div>
     <div class="md-layout post-layout">
       <div class="md-layout-item">
+        <div class="exit-button">
+          <img :src="EXIT" class="exit" @click="resetData" />
+        </div>
+        <div class="text-input">
+          <md-field>
+            <label>どんな出来ばえ？</label>
+            <md-textarea v-model="description"></md-textarea>
+          </md-field>
+        </div>
         <div class="post-box">
-          <span class="post-text">{{ nameImage }}</span>
-          <div class="image">
-            <img :src="dataImage" />
-            <img :src="EXIT" class="exit" />
-          </div>
+          <img :src="dataImage" />
         </div>
         <div class="info">
           <md-field>
             <md-file
-              
               accept="image/*"
               @md-change="onFileUpload($event)"
               placeholder="写真を選択"
@@ -33,7 +37,7 @@ import IMAGE from "@/assets/image/example.png";
 import POST from "@/assets/icons/post.png";
 import EXIT from "@/assets/icons/exit.png";
 const axios = require("axios");
-const FormData = require('form-data');
+const FormData = require("form-data");
 export default {
   name: "PostInputPage",
   components: {},
@@ -46,8 +50,8 @@ export default {
       EXIT,
       dataImage: "",
       tweetId: "",
-      nameImage: '',
-      updateFile: null
+      updateFile: null,
+      description: "",
     };
   },
   computed: {
@@ -56,18 +60,28 @@ export default {
     },
     file() {
       return this.$store.getters["user/getFile"];
+    },
+  },
+  watch: {
+    image() {
+      return this.$store.getters["user/getImage"];
+    },
+  },
+  created() {
+    if (this.image) {
+      this.description = this.image.description;
     }
   },
-  watch: {},
-  created() {},
   mounted() {
-    this.nameImage = this.image.name;
-    this.dataImage = this.image.url;
+    if (this.image) {
+      this.dataImage = this.image.url;
+    }
   },
   methods: {
     async goToPostCompletedPage() {
       let formData = new FormData();
       formData.append("file", this.file);
+      formData.append("description", this.description);
 
       let config = {
         method: "post",
@@ -83,8 +97,7 @@ export default {
           const image = {
             url: response.data.url,
             name: response.data.name
-          }
-          console.log('image', image)
+          };
           this.$store.dispatch("user/setIsImage", image);
           this.$store.dispatch("user/setIsTweetId", this.tweetId);
         })
@@ -97,17 +110,23 @@ export default {
       this.$store.dispatch("user/setIsFile", event[0]);
       this.updateFile = event[0];
       let reader = new FileReader();
+      let tempData;
       reader.readAsDataURL(event[0]);
       reader.onload = (e) => {
         console.log(e);
-        this.image = {
+        tempData = {
           url: e.target.result,
-          name: (event[0].name)
-          };
-        console.log(this.nameImage)
-        this.nameImage = this.image.name;
-        this.$store.dispatch("user/setIsImage", this.image);
+          name: event[0].name,
+          description: this.description
+        };
+        this.dataImage = tempData.url;
+        this.$store.dispatch("user/setIsImage", tempData);
       };
+    },
+    resetData() {
+      this.description = "";
+      this.dataImage = null;
+      this.$store.dispatch("user/setIsImage", null);
     },
   },
 };
