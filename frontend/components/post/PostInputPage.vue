@@ -96,7 +96,8 @@ export default {
           this.tweetId = response.data.tweet_id;
           const image = {
             url: response.data.url,
-            name: response.data.name
+            name: response.data.name,
+            description: response.data.description
           };
           this.$store.dispatch("user/setIsImage", image);
           this.$store.dispatch("user/setIsTweetId", this.tweetId);

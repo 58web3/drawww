@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const twitter = require('./twitter')
 const post = require('./post')
+const contract = require('./contract')
 const bodyParser = require('body-parser');
 //var fileUpload = require('express-fileupload')
 // support parsing of application/json type post data
@@ -18,6 +19,7 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use('/v1/twitter', twitter)
 app.use('/v1/post', post)
+app.use('/v1/contract', contract)
 
 app.use((err, req, res, next) => {
   console.error(err.stack)
