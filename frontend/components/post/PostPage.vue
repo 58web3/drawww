@@ -3,8 +3,11 @@
     <div class="page-name">投稿</div>
     <div class="md-layout post-layout">
       <div class="md-layout-item">
-        <div class="post-box">
-          <span class="post-text">どんな出来ばえ？</span>
+        <div class="text-input">
+          <md-field>
+            <label>どんな出来ばえ？</label>
+            <md-textarea v-model="description"></md-textarea>
+          </md-field>
         </div>
         <div class="info">
           <md-field>
@@ -32,7 +35,7 @@ export default {
     return {
       POST,
       dataImage: null,
-      image: null,
+      description: ''
     };
   },
   computed: {},
@@ -44,14 +47,16 @@ export default {
       console.log(event[0]);
       this.$store.dispatch("user/setIsFile", event[0]);
       let reader = new FileReader();
+      let tempData;
       reader.readAsDataURL(event[0]);
       reader.onload = (e) => {
         console.log(e);
-        this.image = {
+        tempData = {
           url: e.target.result,
           name: event[0].name,
+          description: this.description
         };
-        this.$store.dispatch("user/setIsImage", this.image);
+        this.$store.dispatch("user/setIsImage", tempData);
       };
       this.$router.push("/post/post-input");
     }

@@ -9,11 +9,13 @@
   justify-content: center;
   flex-direction: column;
 
-  .post-box {
+  .text-input {
     margin: 0 auto;
     width: 320px;
-    min-height: 262px;
-    border: 1px solid rgba(0, 0, 0, 0.64);
+
+    .md-textarea {
+      margin-top: 15px;
+    }
   }
 
   .post-text {
