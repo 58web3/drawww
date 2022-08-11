@@ -5,12 +5,12 @@
         <div class="dao-item" v-for="item of listContract" :key="item.tweet_id">
           <span class="label">#{{ item.name }}</span>
           <img :src="item.url" class="image" />
-          <span class="text-title">総売り上げ額</span>
+          <span class="text-title">{{ $t("total_sales") }}</span>
           <span class="text-detail">143.47 ETH</span>
-          <span class="text-title">ロックアップ金額</span>
+          <span class="text-title">{{ $t("lockup_amount") }}</span>
           <span class="text-detail">89.22 ETH</span>
         </div>
-        <span class="empty-data" v-if="listContract.length === 0">No contract data</span>
+        <span class="empty-data" v-if="listContract.length === 0">{{ $t("no_contract_data") }}</span>
       </div>
     </div>
   </div>
@@ -30,6 +30,7 @@ export default {
       IMAGE,
       IMAGE2,
       listContract: [],
+
     };
   },
   computed: {},

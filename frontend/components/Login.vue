@@ -8,7 +8,7 @@
       v-if="checkLogin"
       @click="login"
     >
-      Login
+      {{ $t('login') }}
     </md-button>
   </div>
 </template>

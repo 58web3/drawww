@@ -1,12 +1,12 @@
 <template>
   <div class="post-completed">
     <div class="page-name">
-      Twitter投稿完了
+      {{ $t("twitter_post_complete") }}
     </div>
     <div class="md-layout post-layout">
       <div class="md-layout-item">
         <md-button class="post-button" @click="goToTwitterPage">
-            閲覧する
+          {{ $t("browse") }}
         </md-button>
       </div>
     </div>
@@ -14,15 +14,13 @@
 </template>
 
 <script>
-
 export default {
-  name: 'PostCompletedPage',
-  components: {
-  },
+  name: "PostCompletedPage",
+  components: {},
   mixins: [],
   props: {},
   data() {
-    return {}
+    return {};
   },
   computed: {},
   watch: {},
@@ -30,10 +28,10 @@ export default {
   mounted() {},
   methods: {
     goToTwitterPage() {
-      window.location.href = 'https://twitter.com/home';
-    }
+      window.location.href = "https://twitter.com/home";
+    },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

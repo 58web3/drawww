@@ -1,6 +1,6 @@
 <template>
   <div class="post-input">
-    <div class="page-name">投稿</div>
+    <div class="page-name">{{ $t("post") }}</div>
     <div class="md-layout post-layout">
       <div class="md-layout-item">
         <div class="exit-button">
@@ -8,7 +8,7 @@
         </div>
         <div class="text-input">
           <md-field>
-            <label>どんな出来ばえ？</label>
+            <label>{{ $t("description") }}</label>
             <md-textarea v-model="description"></md-textarea>
           </md-field>
         </div>
@@ -20,12 +20,12 @@
             <md-file
               accept="image/*"
               @md-change="onFileUpload($event)"
-              placeholder="写真を選択"
+              :placeholder="$t('select_photo')"
             />
           </md-field>
         </div>
         <md-button class="post-button" @click="goToPostCompletedPage">
-          投稿する
+          {{ $t("posted") }}
         </md-button>
       </div>
     </div>
@@ -52,6 +52,7 @@ export default {
       tweetId: "",
       updateFile: null,
       description: "",
+      defaultLanguage: ""
     };
   },
   computed: {
@@ -61,13 +62,20 @@ export default {
     file() {
       return this.$store.getters["user/getFile"];
     },
+    language() {
+      return this.$i18n.locale;
+    },
   },
   watch: {
     image() {
       return this.$store.getters["user/getImage"];
     },
+    language() {
+      return this.$i18n.locale;
+    },
   },
   created() {
+    this.defaultLanguage = this.$i18n.defaultLocale;
   },
   mounted() {
     if (this.image) {
@@ -95,7 +103,7 @@ export default {
           const image = {
             url: response.data.url,
             name: response.data.name,
-            description: response.data.description
+            description: response.data.description,
           };
           this.$store.dispatch("user/setIsImage", image);
           this.$store.dispatch("user/setIsTweetId", this.tweetId);
@@ -103,7 +111,11 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-      this.$router.push("/post/post-twitter");
+      this.$router.push(
+        this.language === this.defaultLanguage
+          ? "/post/post-twitter"
+          : `/${this.language}/post/post-twitter`
+      );
     },
     onFileUpload(event) {
       this.$store.dispatch("user/setIsFile", event[0]);
@@ -116,7 +128,7 @@ export default {
         tempData = {
           url: e.target.result,
           name: event[0].name,
-          description: this.description
+          description: this.description,
         };
         this.dataImage = tempData.url;
         this.$store.dispatch("user/setIsImage", tempData);

@@ -7,14 +7,14 @@
             <span class="text-detail">{{ nameImage }}</span>
             <span class="text-title">NFT</span>
             <span class="text-detail">{{ transactionHash }}</span>
-            <span class="text-title">NFT 所有者</span>
+            <span class="text-title">{{ $t("nft_owner") }}</span>
             <span class="text-detail">{{ transactionHash }}</span>
         </div>
         <div class="link-box">
           <span class="link">{{ testUrl }}</span>
         </div>
         <md-button class="marketplace-button" @click="goToCompletedPage">
-            出品先URLを登録
+            {{ $t("register_list_url") }}
         </md-button>
       </div>
     </div>
@@ -34,44 +34,38 @@ export default {
         dataImage: '',
         nameImage: '',
         transactionHash: '',
-        testUrl: 'https://testnets.opensea.io/assets/rinkeby/'
+        testUrl: 'https://testnets.opensea.io/assets/rinkeby/',
+        defaultLanguage: ""
     }
   },
   computed: {
     contractInfo() {
       return this.$store.getters['user/getContractInfo']
+    },
+    language() {
+      return this.$i18n.locale;
     }
   },
-  watch: {},
+  watch: {
+    language() {
+      return this.$i18n.locale;
+    }
+  },
   created() {
-    //this.getContractDetail(this.tweetId);
+    this.defaultLanguage = this.$i18n.defaultLocale;
   },
   mounted() {
-    console.log(this.contractInfo)
     this.dataImage = this.contractInfo.url;
     this.nameImage = this.contractInfo.name;
     this.transactionHash = this.contractInfo.transaction_hash;
   },
   methods: {
-    // async getContractDetail(tweetId) {
-    //   const config = {
-    //     method: "get",
-    //     url: `/v1/contract/${tweetId}`,
-    //     headers: {
-    //       accept: "application/json",
-    //       "Content-Type": "application/json",
-    //     },
-    //   };
-    //   await axios(config)
-    //     .then((response) => {
-    //       this.transactionHash = response.data.transaction_hash;
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // },
     goToCompletedPage() {
-        this.$router.push('/market-completed')
+      this.$router.push(
+        this.language === this.defaultLanguage
+          ? "/market-completed"
+          : `/${this.language}/market-completed`
+      );
     }
   },
 }
