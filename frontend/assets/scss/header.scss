@@ -1,6 +1,7 @@
 .header {
   height: 101px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   top: 0;
@@ -10,5 +11,10 @@
 
   .header-text {
     font-size: 32px;
+  }
+
+  .select-lang {
+    margin-top: 20px;
+    padding: 5px;
   }
 }
