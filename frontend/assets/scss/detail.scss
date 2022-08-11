@@ -8,15 +8,24 @@
     flex-direction: column;
 
     .image {
-        width: 341px;
-        height: 486px;
+      width: 341px;
+      height: 486px;
     }
 
     .text-detail {
-        padding-top: 10px;
-        padding-left: 15px;
-        font-size: 22px;
-        color: #6EA5F9;
+      padding-top: 10px;
+      padding-left: 15px;
+      font-size: 22px;
+      color: #6ea5f9;
+    }
+
+    .description {
+      padding-top: 20px;
+      padding-left: 15px;
+      font-size: 20px;
+      word-wrap: break-word;
+      width: 326px;
+      display: block;
     }
   }
 
@@ -24,10 +33,10 @@
     padding: 20px 0;
 
     .twitter {
-        margin-right: 20px;
-        float: right;
-        width: 34px;
-        height: 34px;
+      margin-right: 20px;
+      float: right;
+      width: 34px;
+      height: 34px;
     }
   }
 
@@ -37,7 +46,7 @@
     display: flex;
     width: 134px;
     height: 35px;
-    background-color: #4D9DE8;
+    background-color: #4d9de8;
     color: #fff;
   }
 
