@@ -1,14 +1,14 @@
 <!-- Please remove this file from your project -->
 <template>
   <div class="login">
-    <span class="login-header">ログイン</span>
+    <span class="login-header">{{ $t('login') }}</span>
     <md-button
       class="md-raised md-primary login-button"
       style="width: 100%"
       v-if="checkLogin"
       @click="login"
     >
-      Login
+      {{ $t('login') }}
     </md-button>
   </div>
 </template>

@@ -7,9 +7,9 @@
             <span class="text-detail">{{ nameImage }}</span>
             <span class="text-title">NFT</span>
             <span class="text-detail">{{ transactionHash }}</span>
-            <span class="text-title">NFT 所有者</span>
+            <span class="text-title">{{ $t("nft_owner") }}</span>
             <span class="text-detail">{{ transactionHash }}</span>
-            <span class="text-title title-url">NFT マーケットプレイスURL</span>
+            <span class="text-title title-url">{{ $t("nft_marketplace_url") }}</span>
             <span class="text-detail link-url">{{ testUrl }}</span>
         </div>
       </div>

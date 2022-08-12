@@ -5,7 +5,7 @@
         <div class="md-toolbar-box">
           <div class="md-large item" @click="goToHomePage">
             <div :class="home"></div>
-            <span class="footer-btn-font">Home</span>
+            <span class="footer-btn-font">{{ $t("home") }}</span>
           </div>
           <div class="md-large item" @click="goToPostPage">
             <div :class="post"></div>
@@ -13,7 +13,7 @@
           </div>
           <div class="md-large item" @click="goToDAOPage">
             <div :class="dao"></div>
-            <span class="footer-btn-font">NFT DAO</span>
+            <span class="footer-btn-font">{{ $t("nft_dao") }}</span>
           </div>
         </div>
       </div>
@@ -34,12 +34,23 @@ export default {
       home: "circle",
       post: "circle",
       dao: "circle",
+      defaultLanguage: ''
     };
   },
   async fetch() {},
-  computed: {},
-  watch: {},
-  created() {},
+  computed: {
+    language() {
+      return this.$i18n.locale
+    }
+  },
+  watch: {
+    language() {
+      return this.$i18n.locale
+    }
+  },
+  created() {
+    this.defaultLanguage = this.$i18n.defaultLocale;
+  },
   mounted() {
     this.$root.$on("home-active", () => {
       this.home = "circle home";
@@ -62,15 +73,15 @@ export default {
   methods: {
     goToHomePage() {
       this.$root.$emit("home-active");
-      this.$router.push("/home");
+      this.$router.push(this.language === this.defaultLanguage ? "/home" : `/${this.language}/home`);
     },
     goToPostPage() {
       this.$root.$emit("post-active");
-      this.$router.push("/post");
+      this.$router.push(this.language === this.defaultLanguage ? "/post" : `/${this.language}/post`);
     },
     goToDAOPage() {
       this.$root.$emit("dao-active");
-      this.$router.push("/dao");
+      this.$router.push(this.language === this.defaultLanguage ? "/dao" : `/${this.language}/dao`);
     },
   },
 };

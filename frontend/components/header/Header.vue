@@ -1,27 +1,42 @@
 <template>
   <div class="header">
     <span class="header-text">Drawww</span>
+    <select class="select-lang" v-model="language" @change="(e) => changeLanguage(e)">
+      <option v-for="item in languages" :key="item.code" :value="item.code">
+        {{ item.name }}
+      </option>
+    </select>
   </div>
 </template>
 
 <script>
-
 export default {
-  name: 'Header',
+  name: "Header",
   components: {},
   mixins: [],
   props: {},
   data() {
-    return {}
+    return {
+      language: "",
+      defaultLanguage: "",
+      languages: [],
+    };
   },
   async fetch() {},
   computed: {},
   watch: {},
-  created() {},
-  mounted() {
+  created() {
+    this.language = this.$i18n.locale;
+    this.defaultLanguage = this.$i18n.defaultLocale;
+    this.languages = this.$i18n.locales;
   },
-  methods: {},
-}
+  mounted() {},
+  methods: {
+    changeLanguage(e) {
+      this.$i18n.setLocale(e.target.value);
+    },
+  },
+};
 </script>
 <style lang="scss" scoped>
 @import "@/assets/scss/header";

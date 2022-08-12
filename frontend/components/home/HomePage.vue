@@ -8,7 +8,7 @@
           v-if="checkLogout"
           @click="logout"
         >
-          Logout
+          {{ $t('logout') }}
         </md-button>
         <div
           class="home-detail"
@@ -35,12 +35,22 @@ export default {
     return {
       listImages: [],
       checkLogout: false,
-      web3auth: null
+      web3auth: null,
+      defaultLanguage: ""
     };
   },
-  computed: {},
-  watch: {},
+  computed: {
+    language() {
+      return this.$i18n.locale;
+    }
+  },
+  watch: {
+    language() {
+      return this.$i18n.locale;
+    }
+  },
   created() {
+    this.defaultLanguage = this.$i18n.defaultLocale;
     this.web3auth = new Web3Auth({
       clientId: process.env.WEB3AUTH_CLIENT_ID,
       chainConfig: {
@@ -81,14 +91,22 @@ export default {
   methods: {
     goToDetailPage(id) {
       this.$store.dispatch('user/setIsTweetId', id)
-      this.$router.push("/detail");
+      this.$router.push(
+        this.language === this.defaultLanguage
+          ? "/detail"
+          : `/${this.language}/detail`
+      );
     },
     async logout() {
       this.$store.dispatch("user/setUser", null);
       sessionStorage.removeItem("user");
       sessionStorage.setItem("isLogin", true);
       await this.web3auth.logout();
-      this.$router.push("/");
+      this.$router.push(
+        this.language === this.defaultLanguage
+          ? "/"
+          : `/${this.language}`
+      );
     },
   },
 };

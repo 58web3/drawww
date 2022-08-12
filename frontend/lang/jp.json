@@ -1,0 +1,23 @@
+{
+  "login": "ログイン",
+  "logout": "ログアウト",
+  "post": "投稿",
+  "description": "どんな出来ばえ？",
+  "select_photo": "写真を選択",
+  "home": "ホーム",
+  "nft_dao": "NFT DAO",
+  "posted": "投稿する",
+  "post_to_twitter": "Twitterに投稿",
+  "post_completed": "投稿完了",
+  "twitter_post_complete": "Twitter投稿完了",
+  "browse": "閲覧する",
+  "minting_the_nft": "NFTをMintする",
+  "nft_completed": "NFT作成完了",
+  "see_nft": "NFTを見てみる",
+  "nft_owner": "NFT 所有者",
+  "register_list_url": "出品先URLを登録",
+  "nft_marketplace_url": "NFT マーケットプレイスURL",
+  "total_sales": "総売り上げ額",
+  "lockup_amount": "ロックアップ金額",
+  "no_contract_data": "契約データなし"
+}

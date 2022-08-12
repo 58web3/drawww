@@ -10,7 +10,7 @@
           <img :src="TWITTER" class="twitter" />
         </div>
         <md-button class="detail-button" @click="goToNFTMintPage">
-          NFTをMintする
+          {{ $t("minting_the_nft") }}
         </md-button>
       </div>
     </div>
@@ -37,15 +37,24 @@ export default {
       imageData: null,
       nameImage: "",
       account: "",
+      defaultLanguage: ""
     };
   },
   computed: {
     tweetId() {
       return this.$store.getters["user/getTweetId"];
     },
+    language() {
+      return this.$i18n.locale;
+    },
   },
-  watch: {},
+  watch: {
+    language() {
+      return this.$i18n.locale;
+    },
+  },
   async created() {
+    this.defaultLanguage = this.$i18n.defaultLocale;
     this.getPostDetail(this.tweetId);
   },
   mounted() {},
@@ -94,7 +103,7 @@ export default {
         .send({
           from: this.account,
           gasLimit,
-          gasPrice
+          gasPrice,
         })
         .on("transactionHash", function (hash) {
           transactionHash = hash;
@@ -142,7 +151,11 @@ export default {
           });
       }
 
-      this.$router.push("/nft");
+      this.$router.push(
+        this.language === this.defaultLanguage
+          ? "/nft"
+          : `/${this.language}/nft`
+      );
     },
   },
 };

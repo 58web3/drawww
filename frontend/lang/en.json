@@ -1,0 +1,23 @@
+{
+  "login": "Login",
+  "logout": "Logout",
+  "post": "Post",
+  "description": "How well?",
+  "select_photo": "Select photo",
+  "home": "Home",
+  "nft_dao": "NFT DAO",
+  "posted": "Post",
+  "post_to_twitter": "Post to Twitter",
+  "post_completed": "Post completed",
+  "twitter_post_complete": "Twitter post complete",
+  "browse": "Browse",
+  "minting_the_nft": "Minting the NFT",
+  "nft_completed": "NFT completed",
+  "see_nft": "See NFT",
+  "nft_owner": "NFT Owner",
+  "register_list_url": "Register List Url",
+  "nft_marketplace_url": "NFT Marketplace URL",
+  "total_sales": "Total sales",
+  "lockup_amount": "Lockup amount",
+  "no_contract_data": "No contract data"
+}

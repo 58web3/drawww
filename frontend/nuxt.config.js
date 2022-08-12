@@ -74,7 +74,26 @@ export default {
     '@nuxtjs/proxy',
     'nuxt-basic-auth-module',
     '@nuxtjs/dotenv',
+    '@nuxtjs/i18n'
   ],
+
+  i18n: {
+    locales: [
+      {
+        code: 'jp',
+        name: '日本語',
+        file: 'jp.json'
+      },
+      {
+        code: 'en',
+        name: 'English',
+        file: 'en.json'
+      }
+    ],
+    lazy: true,
+    langDir: 'lang/',
+    defaultLocale: 'jp'
+  },
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
