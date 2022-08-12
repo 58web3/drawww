@@ -57,7 +57,7 @@ export default {
   },
   async created() {
     this.defaultLanguage = this.$i18n.defaultLocale;
-    this.getPostDetail(this.tweetId);
+    this.getPostDetail(this.$route.params.id);
   },
   mounted() {},
   methods: {
