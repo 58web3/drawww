@@ -93,8 +93,8 @@ export default {
       this.$store.dispatch('user/setIsTweetId', id)
       this.$router.push(
         this.language === this.defaultLanguage
-          ? "/detail"
-          : `/${this.language}/detail`
+          ? `/post/${id}`
+          : `/${this.language}/post/${id}`
       );
     },
     async logout() {
