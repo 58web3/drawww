@@ -5,6 +5,7 @@
         <div class="detail">
           <img :src="post.url" class="image" />
           <span class="text-detail">{{ nameImage }}</span>
+          <span class="description">{{ description }}</span>
         </div>
         <div class="icon">
           <img :src="TWITTER" class="twitter" />
@@ -37,7 +38,8 @@ export default {
       imageData: null,
       nameImage: "",
       account: "",
-      defaultLanguage: ""
+      defaultLanguage: "",
+      description: ""
     };
   },
   computed: {
@@ -74,9 +76,10 @@ export default {
           this.imageData = {
             url: this.post.url,
             name: this.post.name,
+            description: this.post.description
           };
           this.nameImage = this.imageData.name;
-          console.log(this.nameImage);
+          this.description = this.imageData.description;
           this.$store.dispatch("user/setIsImage", this.imageData);
         })
         .catch((error) => {
