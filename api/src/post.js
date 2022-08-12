@@ -13,11 +13,25 @@ router.post("/", upload.single("file"), async (req, res) => {
     const file = req.file;
     let tweetId = uuid.v4() + Date.now();
     const systemDate = Date.now();
+    const projectId = process.env.PROJECT_ID;
+    const projectSecret = process.env.PROJECT_SECRET;
+    const subDomain = process.env.SUB_DOMAIN;
+    const auth =
+      "Basic " +
+      Buffer.from(projectId + ":" + projectSecret).toString("base64");
 
-    const client = create.create("https://ipfs.infura.io:5001/api/v0");
+    const client = await create.create({
+      host: `ipfs.infura.io`,
+      port: 5001,
+      protocol: "https",
+      apiPath: "/api/v0",
+      headers: {
+        authorization: auth,
+      },
+    });
 
     const added = await client.add(file.buffer);
-    const url = `https://ipfs.infura.io/ipfs/${added.path}`;
+    const url = `https://${subDomain}.infura-ipfs.io/ipfs/${added.path}`;
 
     const tweet = {
       tweet_id: tweetId,
