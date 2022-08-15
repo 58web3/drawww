@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <span class="header-text">Drawww</span>
+    <img :src="Header">
     <select class="select-lang" v-model="language" @change="(e) => changeLanguage(e)">
       <option v-for="item in languages" :key="item.code" :value="item.code">
         {{ item.name }}
@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import Header from '@/assets/image/Header.png';
 export default {
   name: "Header",
   components: {},
@@ -17,6 +18,7 @@ export default {
   props: {},
   data() {
     return {
+      Header,
       language: "",
       defaultLanguage: "",
       languages: [],
