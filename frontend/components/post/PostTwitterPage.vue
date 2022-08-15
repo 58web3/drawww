@@ -76,6 +76,28 @@ export default {
           : `/${this.language}/post/post-completed`
       );
     },
+    async loginTwitter() {
+      const requestURL = process.env.TWITTER_REQUEST_URL + 
+      "?oauth_consumer_key=" + process.env.CONSUMER_KEY +
+      "&oauth_callback=" + encodeURIComponent(process.env.DRAWWW_APP_URL);
+
+      console.log(requestURL)
+      const res1 = await axios.get(requestURL);
+      console.log(res1.data)
+
+      const authorizeURL = process.env.TWITTER_AUTHORIZE_URL + "?oauth_token=" + res1.data.oauth_token
+      console.log(authorizeURL)
+      const res2 = await axios.get(authorizeURL);
+      console.log(res2.data)
+
+      const accessURL = process.env.TWITTER_ACCESS_URL + 
+      "?oauth_token=" + res1.data.oauth_token +
+      "&oauth_verifier=" + res1.data.oauth_verifier +
+      "&oauth_consumer_key=" + process.env.CONSUMER_KEY;
+      console.log(accessURL)
+      const res3 = await axios.post(accessURL, {});
+      console.log(res3.data)
+    }
   },
 };
 </script>
