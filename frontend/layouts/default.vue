@@ -40,7 +40,7 @@ body {
 .wrapper {
     width: 100%;
     margin: 0 auto;
-    top: 101px;
+    top: 153px;
     bottom: 101px;
     position: absolute;
     overflow-y: scroll;
